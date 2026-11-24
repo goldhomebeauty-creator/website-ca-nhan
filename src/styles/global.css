@@ -15,6 +15,7 @@
   --blue-soft: #E2ECF4;
   --radius: 14px;
   --max: 1120px;
+  --font: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 [data-theme="dark"] {
   --bg: #14110F;
@@ -36,7 +37,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  font-family: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: var(--font);
   font-size: 17px;
   line-height: 1.75;
   background: var(--bg);
@@ -45,6 +46,8 @@ body {
   transition: background-color .3s ease, color .3s ease;
 }
 a { color: inherit; text-decoration: none; }
+/* Nút, ô nhập, menu chọn không tự kế thừa font: ép cả site dùng Be Vietnam Pro */
+button, input, select, textarea, optgroup { font-family: inherit; }
 img, svg { display: block; max-width: 100%; }
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
@@ -224,3 +227,10 @@ footer { border-top: 1px solid var(--line); margin-top: 56px; padding: 48px 0 32
   .sec-head { flex-direction: column; align-items: start; }
   .foot { grid-template-columns: 1fr; }
 }
+
+/* ---------- Trang 404 ---------- */
+.notfound { padding: 96px 24px 120px; text-align: center; max-width: 640px; }
+.notfound-code { font-size: 72px; font-weight: 700; line-height: 1; color: var(--accent); letter-spacing: -2px; margin-bottom: 16px; }
+.notfound h1 { font-size: clamp(26px, 4vw, 36px); line-height: 1.3; margin-bottom: 14px; }
+.notfound .lead { color: var(--muted); margin-bottom: 28px; }
+.notfound .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }

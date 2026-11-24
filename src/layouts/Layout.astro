@@ -1,13 +1,18 @@
 ---
 import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
 interface Props {
 	title?: string;
 	description?: string;
+	/** Trang đang mở, để đánh dấu menu (vd. 'home') */
+	current?: string;
 }
 const {
 	title = 'Lê Thu Giang - Hiểu da, chọn đúng, làm đủ',
 	description = 'Blog chăm sóc da khoa học và lối sống kỷ luật cho phụ nữ bận rộn. Hiểu da, chọn đúng, làm đủ.',
+	current,
 } = Astro.props;
 ---
 
@@ -39,6 +44,66 @@ const {
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <Header current={current} />
     <slot />
+    <Footer />
+
+    <!-- Dùng chung cho mọi trang: nút sáng/tối, menu di động, hiệu ứng hiện dần -->
+    <script is:inline>
+    (function () {
+      var root = document.documentElement;
+      var btn = document.getElementById('themeToggle');
+      var note = document.getElementById('themeNote');
+      var tz = '';
+      try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) {}
+
+      function autoTheme() { var h = new Date().getHours(); return (h >= 6 && h < 18) ? 'light' : 'dark'; }
+      function saved() { try { return localStorage.getItem('theme'); } catch (e) { return null; } }
+      function render() {
+        var t = root.getAttribute('data-theme');
+        btn.setAttribute('aria-label', t === 'dark' ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện tối');
+        if (note) note.textContent = saved()
+          ? 'Giao diện ' + (t === 'dark' ? 'tối' : 'sáng') + ' (chị đã chọn)'
+          : 'Giao diện tự động theo giờ' + (tz ? ' ' + tz : '');
+      }
+
+      // Bấm để đổi và ghi nhớ; chọn trùng chế độ tự động thì quay về tự động
+      btn.addEventListener('click', function () {
+        var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try {
+          if (next === autoTheme()) localStorage.removeItem('theme');
+          else localStorage.setItem('theme', next);
+        } catch (e) {}
+        render();
+      });
+
+      // Chưa chọn tay: kiểm tra mỗi phút để đổi giao diện lúc 6h và 18h
+      setInterval(function () {
+        if (!saved()) { root.setAttribute('data-theme', autoTheme()); render(); }
+      }, 60000);
+      render();
+
+      // Menu di động
+      var menuBtn = document.getElementById('menuBtn');
+      var menu = document.getElementById('menu');
+      menuBtn.addEventListener('click', function () {
+        var open = menu.classList.toggle('open');
+        menuBtn.setAttribute('aria-expanded', open);
+      });
+      menu.addEventListener('click', function (e) {
+        if (e.target.tagName === 'A') { menu.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); }
+      });
+
+      // Hiện dần khi cuộn
+      var els = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+        }, { threshold: 0.12 });
+        els.forEach(function (el) { io.observe(el); });
+      } else { els.forEach(function (el) { el.classList.add('in'); }); }
+    })();
+    </script>
   </body>
 </html>

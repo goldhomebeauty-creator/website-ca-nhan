@@ -38,5 +38,5 @@ Phương châm xuyên suốt: **Hiểu da - Chọn đúng - Làm đủ.**
 
 ## 5. Kỹ thuật
 
-- Bản HTML tĩnh hiện tại, sau chuyển sang Astro (Cloudflare Workers) với nội dung Markdown.
+- Chạy trên Astro (Cloudflare Workers). Giao diện chung nằm ở `src/layouts/Layout.astro` + `src/components/Header.astro`, `Footer.astro`; font Be Vietnam Pro áp cho toàn site qua biến `--font`. Bước sau: nội dung bài viết bằng Markdown.
 - Đạt Lighthouse 95+, tương phản AA ở cả 2 chế độ, hỗ trợ bàn phím, `prefers-reduced-motion`.
