@@ -1,0 +1,44 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+const {
+	title = 'Lê Thu Giang - Hiểu da, chọn đúng, làm đủ',
+	description = 'Blog chăm sóc da khoa học và lối sống kỷ luật cho phụ nữ bận rộn. Hiểu da, chọn đúng, làm đủ.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- Chọn giao diện trước khi vẽ trang để không bị nháy màu -->
+    <script is:inline>
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem('theme'); } catch (e) {}
+      var hour = new Date().getHours(); // giờ theo múi giờ của người xem
+      var auto = (hour >= 6 && hour < 18) ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', saved || auto);
+    })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
