@@ -2,6 +2,8 @@
 
 Website cá nhân, dựng bằng [Astro](https://astro.build) và chạy trên Cloudflare Workers (adapter `@astrojs/cloudflare`).
 
+Bản đang chạy: https://website-ca-nhan.goldhomebeauty.workers.dev
+
 ## Lệnh thường dùng
 
 | Lệnh | Việc làm |
