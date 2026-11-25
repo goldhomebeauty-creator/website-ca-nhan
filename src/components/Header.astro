@@ -1,6 +1,7 @@
 ---
 interface Props { current?: string }
 const { current } = Astro.props;
+import Logo from './Logo.astro';
 ---
 
 <a class="skip" href="#main">Bỏ qua tới nội dung</a>
@@ -8,7 +9,7 @@ const { current } = Astro.props;
 <!-- ================= HEADER ================= -->
 <header>
   <div class="wrap nav">
-    <a href="/" class="logo" aria-label="Trang chủ Lê Thu Giang"><span class="logo-dot">G</span>Thu Giang</a>
+    <a href="/" class="logo" aria-label="Trang chủ Lê Thu Giang"><Logo id="dau" /></a>
     <ul class="menu" id="menu">
       <li><a href="/" aria-current={current === 'home' ? 'page' : undefined}>Trang chủ</a></li>
       <li><a href="/#chu-de">Chăm da</a></li>

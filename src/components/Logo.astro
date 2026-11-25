@@ -1,0 +1,24 @@
+---
+// Logo: giọt serum chuyển màu hồng đất sang vàng + chữ "Thu Giang" và phương châm.
+interface Props { id?: string; tagline?: boolean }
+const { id = 'lg', tagline = true } = Astro.props;
+const grad = `logo-grad-${id}`;
+---
+
+<span class="logo-mark" aria-hidden="true">
+  <svg viewBox="0 0 40 40" width="36" height="36">
+    <defs>
+      <linearGradient id={grad} x1="8" y1="4" x2="32" y2="38" gradientUnits="userSpaceOnUse">
+        <stop offset="0" style="stop-color: var(--accent)" />
+        <stop offset="1" style="stop-color: var(--gold)" />
+      </linearGradient>
+    </defs>
+    <path d="M20 3.5C26.5 11 33 18.2 33 25.5a13 13 0 0 1-26 0C7 18.2 13.5 11 20 3.5Z" fill={`url(#${grad})`} />
+    <path d="M13.2 25.2a6.8 6.8 0 0 0 5 6.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".9" />
+    <circle cx="25.5" cy="20" r="1.6" fill="#fff" opacity=".55" />
+  </svg>
+</span>
+<span class="logo-text">
+  <span class="logo-name">Thu <b>Giang</b></span>
+  {tagline && <span class="logo-tag">Hiểu da · Chọn đúng · Làm đủ</span>}
+</span>
