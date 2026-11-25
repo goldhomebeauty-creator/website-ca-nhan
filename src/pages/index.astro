@@ -1,6 +1,8 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
+import { getEntry } from 'astro:content';
+import { phutDocBai } from '../lib/bai';
 import anhGhe from '../assets/anh/giang-ghe-sofa.webp';
 import anhChanDung from '../assets/anh/giang-chan-dung.webp';
 import anhSoiDa from '../assets/anh/tu-van-soi-da.webp';
@@ -10,6 +12,8 @@ import anhDocSach from '../assets/anh/giang-doc-sach.webp';
 import anhCafe from '../assets/anh/giang-cafe.webp';
 import anhTroChuyen from '../assets/anh/tro-chuyen-laptop.webp';
 import anhDuongDa from '../assets/anh/duong-da-buoi-toi.webp';
+const baiNam = await getEntry('bai', 'nam-da-la-gi');
+const phutNam = baiNam ? phutDocBai(baiNam) : 12;
 ---
 
 <Layout current="home">
@@ -40,7 +44,7 @@ import anhDuongDa from '../assets/anh/duong-da-buoi-toi.webp';
         <div><h2>Bài nổi bật</h2><p>Những bài được chị em đọc và lưu lại nhiều nhất</p></div>
       </div>
       <div class="featured">
-        <a href="#" class="card big reveal">
+        <a href="/bai/nam-da-la-gi/" class="card big reveal">
           <div class="thumb photo">
             <Image src={anhSoiDa} alt="Giang soi da và tư vấn cho khách" widths={[480, 760, 1100]} sizes="(max-width: 820px) 100vw, 640px" />
           </div>
@@ -48,7 +52,7 @@ import anhDuongDa from '../assets/anh/duong-da-buoi-toi.webp';
             <span><span class="tag t-nam">Nám &amp; sạm</span></span>
             <h3>Nám da là gì? Nguyên nhân và cách chăm sóc an toàn tại nhà</h3>
             <p>Hiểu đúng cơ chế hình thành nám trước khi chọn bất kỳ sản phẩm nào. Bài nền tảng nên đọc đầu tiên nếu chị đang lo về nám.</p>
-            <div class="meta"><span>12 phút đọc</span><span>Bài nền tảng</span></div>
+            <div class="meta"><span>{phutNam} phút đọc</span><span>Bài nền tảng</span></div>
           </div>
         </a>
         <div class="side">

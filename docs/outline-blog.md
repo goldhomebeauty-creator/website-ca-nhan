@@ -24,7 +24,7 @@ Phương châm xuyên suốt: **Hiểu da - Chọn đúng - Làm đủ.**
 9. **Nhận thư mỗi tuần:** form email.
 10. **Chân trang:** chuyên mục, mạng xã hội, lưu ý y khoa.
 
-## 3. Trang bài viết (bước sau)
+## 3. Trang bài viết (đã làm, /bai/<tên-file>/)
 
 - Thanh tiến độ đọc ở đầu trang, mục lục dính bên cạnh (desktop), cỡ chữ điều chỉnh được.
 - Khung "Tóm tắt 30 giây" đầu bài, hộp "Nên / Tránh", hộp "Khi nào cần gặp bác sĩ".
@@ -38,5 +38,5 @@ Phương châm xuyên suốt: **Hiểu da - Chọn đúng - Làm đủ.**
 
 ## 5. Kỹ thuật
 
-- Chạy trên Astro (Cloudflare Workers). Giao diện chung nằm ở `src/layouts/Layout.astro` + `src/components/Header.astro`, `Footer.astro`; font Be Vietnam Pro áp cho toàn site qua biến `--font`. Bước sau: nội dung bài viết bằng Markdown.
+- Chạy trên Astro (Cloudflare Workers). Giao diện chung nằm ở `src/layouts/Layout.astro` + `src/components/Header.astro`, `Footer.astro`; font Be Vietnam Pro áp cho toàn site qua biến `--font`. Bài viết là file Markdown trong `src/content/bai/` (khung dữ liệu ở `src/content.config.ts`, mẫu: `nam-da-la-gi.md`). Phần đầu file khai báo tieuDe, moTa, ngay, chuDe (cham-da, nam-sam, loi-song, goc-tam-su), anh, tomTat, nen, tranh, gapBacSi, hoiDap; `nhap: true` để ẩn bài chưa xong.
 - Đạt Lighthouse 95+, tương phản AA ở cả 2 chế độ, hỗ trợ bàn phím, `prefers-reduced-motion`.

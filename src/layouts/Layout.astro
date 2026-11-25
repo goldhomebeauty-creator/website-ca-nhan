@@ -8,15 +8,21 @@ interface Props {
 	description?: string;
 	/** Trang đang mở, để đánh dấu menu (vd. 'home') */
 	current?: string;
+	/** Ảnh chia sẻ link (đường dẫn hoặc URL), mặc định /og-image.jpg */
+	anhChiaSe?: string;
+	/** 'article' cho trang bài viết */
+	loai?: 'website' | 'article';
 }
 const {
 	title = 'Lê Thu Giang - Hiểu da, chọn đúng, làm đủ',
 	description = 'Blog chăm sóc da khoa học và lối sống kỷ luật cho phụ nữ bận rộn. Hiểu da, chọn đúng, làm đủ.',
 	current,
+	anhChiaSe = '/og-image.jpg',
+	loai = 'website',
 } = Astro.props;
 const base = Astro.site ?? Astro.url;
 const canonical = new URL(Astro.url.pathname, base).href;
-const ogImage = new URL('/og-image.jpg', base).href;
+const ogImage = new URL(anhChiaSe, base).href;
 ---
 
 <!doctype html>
@@ -31,7 +37,7 @@ const ogImage = new URL('/og-image.jpg', base).href;
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
     <!-- Ảnh và chữ hiện ra khi dán link vào Facebook, Zalo -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={loai} />
     <meta property="og:locale" content="vi_VN" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -40,6 +46,8 @@ const ogImage = new URL('/og-image.jpg', base).href;
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href={canonical} />
+    <slot name="head" />
 
     <!-- Chọn giao diện trước khi vẽ trang để không bị nháy màu -->
     <script is:inline>
