@@ -23,6 +23,18 @@ const bai = defineCollection({
       // Hộp "Khi nào cần gặp bác sĩ"
       gapBacSi: z.array(z.string()).default([]),
       hoiDap: z.array(z.object({ hoi: z.string(), dap: z.string() })).default([]),
+      // Video YouTube gắn vào GIỮA bài. Muốn đặt đúng chỗ thì viết dòng
+      // <div data-video></div> trong thân bài; không có thì tự đặt trước mục giữa bài.
+      video: z
+        .object({
+          id: z.string().regex(/^[\w-]{11}$/, 'Mã video YouTube có 11 ký tự'),
+          tieuDe: z.string(),
+          thoiLuong: z.string().regex(/^\d{1,2}:\d{2}(:\d{2})?$/, 'Dạng 5:55 hoặc 1:02:03'),
+          ngayDang: z.coerce.date(),
+          // Mốc thời gian, bấm vào là tua tới đó: { t: "1:20", ten: "Sai lầm 1" }
+          chuong: z.array(z.object({ t: z.string(), ten: z.string() })).default([]),
+        })
+        .optional(),
       lienQuan: z.array(reference('bai')).default([]),
       noiBat: z.boolean().default(false),
       nhap: z.boolean().default(false),

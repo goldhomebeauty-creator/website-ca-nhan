@@ -309,6 +309,33 @@ footer { border-top: 1px solid var(--line); margin-top: 56px; padding: 48px 0 32
 .prose th, .prose td { border-bottom: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
 .prose th { font-weight: 600; background: var(--soft); }
 
+/* Video YouTube giữa bài */
+.prose #video { margin: 2em 0; scroll-margin-top: 90px; }
+.video-box { margin: 0; border-radius: 20px; background: var(--surface); border: 1px solid var(--line); overflow: hidden; font-size: 16px; line-height: 1.5; }
+.video-frame { position: relative; aspect-ratio: 16 / 9; background: #000; }
+.video-frame iframe, .video-play { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-play { padding: 0; cursor: pointer; background: #000; }
+.prose .video-play img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; transition: transform .4s ease, filter .3s; }
+.video-play:hover img { transform: scale(1.03); filter: brightness(.85); }
+.video-btn { position: absolute; left: 50%; top: 50%; width: 68px; height: 68px; margin: -34px 0 0 -34px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: #fff; box-shadow: 0 8px 28px rgba(0,0,0,.35); transition: transform .25s ease; }
+.video-btn svg { margin-left: 3px; }
+.video-play:hover .video-btn { transform: scale(1.08); }
+.video-play:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+.video-len { position: absolute; right: 12px; bottom: 12px; padding: 3px 8px; border-radius: 6px; background: rgba(0,0,0,.75); color: #fff; font-size: 13px; font-weight: 600; }
+.video-box figcaption { display: grid; gap: 4px; padding: 16px 20px 18px; }
+.video-label { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.video-box strong { font-size: 17px; line-height: 1.4; }
+.video-links { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 4px; font-size: 14.5px; }
+.prose .video-links a { color: var(--muted); text-decoration: none; font-weight: 500; }
+.prose .video-links a:hover { color: var(--accent); }
+.prose .video-chapters { list-style: none; padding: 0 12px 12px; margin: 0; display: grid; gap: 2px; }
+.prose .video-chapters li + li { margin-top: 0; }
+.video-chapters button { display: flex; gap: 12px; width: 100%; padding: 8px; border: 0; border-radius: 10px; background: none; text-align: left; cursor: pointer; font: inherit; font-size: 15px; }
+.video-chapters button:hover { background: var(--soft); }
+.video-chapters button span { color: var(--accent); font-weight: 600; font-variant-numeric: tabular-nums; min-width: 3.2em; }
+.has-video { color: var(--accent); font-weight: 600; }
+.author-links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+
 .box { border-radius: var(--radius); padding: 22px 24px; border: 1px solid var(--line); background: var(--surface); }
 .box ul { padding-left: 1.2em; display: grid; gap: 8px; font-size: 16.5px; }
 .box-title { font-size: 15px; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 12px; }

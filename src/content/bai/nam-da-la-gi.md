@@ -6,6 +6,11 @@ chuDe: nam-sam
 anh: ../../assets/anh/tu-van-soi-da.webp
 anhMoTa: "Giang soi da và tư vấn cho khách"
 noiBat: true
+video:
+  id: gIRnDizCRjQ
+  tieuDe: "4 sai lầm khi bôi kem chống nắng khiến nám da và cách dùng đúng"
+  thoiLuong: "5:55"
+  ngayDang: 2026-04-08
 tomTat:
   - "Nám là các mảng sắc tố nâu, thường đối xứng hai bên má, trán, sống mũi hoặc môi trên."
   - "Ba nguyên nhân chính: ánh nắng (cả tia UV lẫn ánh sáng nhìn thấy), nội tiết và cơ địa di truyền."
@@ -93,6 +98,10 @@ Nếu chỉ làm được một việc, hãy chống nắng thật kỹ:
 - Ưu tiên loại **có màu** (tinted), vì oxit sắt trong đó giúp chắn ánh sáng nhìn thấy.
 - Bôi đủ lượng: khoảng hai đốt ngón tay cho cả mặt và cổ.
 - Kết hợp mũ rộng vành, khẩu trang, kính râm khi ra ngoài.
+
+Trong video dưới đây, Giang chỉ ra 4 sai lầm khi bôi kem chống nắng khiến nhiều chị bôi đều mà nám vẫn đậm, kèm cách bôi bao nhiêu là đủ, khi nào cần bôi lại và cách tẩy trang đúng.
+
+<div data-video></div>
 
 ### Bước 2: Giữ hàng rào da khỏe
 

@@ -40,3 +40,19 @@ Phương châm xuyên suốt: **Hiểu da - Chọn đúng - Làm đủ.**
 
 - Chạy trên Astro (Cloudflare Workers). Giao diện chung nằm ở `src/layouts/Layout.astro` + `src/components/Header.astro`, `Footer.astro`; font Be Vietnam Pro áp cho toàn site qua biến `--font`. Bài viết là file Markdown trong `src/content/bai/` (khung dữ liệu ở `src/content.config.ts`, mẫu: `nam-da-la-gi.md`). Phần đầu file khai báo tieuDe, moTa, ngay, chuDe (cham-da, nam-sam, loi-song, goc-tam-su), anh, tomTat, nen, tranh, gapBacSi, hoiDap; `nhap: true` để ẩn bài chưa xong.
 - Đạt Lighthouse 95+, tương phản AA ở cả 2 chế độ, hỗ trợ bàn phím, `prefers-reduced-motion`.
+
+## Gắn video YouTube vào bài
+
+Thêm vào đầu file bài (frontmatter):
+
+```yaml
+video:
+  id: gIRnDizCRjQ          # 11 ký tự sau "watch?v=" trong link
+  tieuDe: "Tên video"
+  thoiLuong: "5:55"
+  ngayDang: 2026-04-08     # ngày đăng trên YouTube, Google cần
+  chuong:                  # không bắt buộc: mốc bấm để tua
+    - { t: "0:40", ten: "Sai lầm 1" }
+```
+
+Video nằm GIỮA bài: đặt dòng `<div data-video></div>` ở chỗ muốn chèn. Không có dòng này thì video tự nằm trước mục lớn ở giữa bài. Khung chỉ tải ảnh bìa, bấm mới tải trình phát YouTube nên trang vẫn nhẹ.

@@ -4,7 +4,8 @@ import { getCollection, getEntries, render } from 'astro:content';
 import { Image, getImage } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import anhTacGia from '../../assets/anh/giang-chan-dung.webp';
-import { CHU_DE, phutDocBai, ngayVN, chiBaiDang } from '../../lib/bai';
+import VideoYoutube from '../../components/VideoYoutube.astro';
+import { CHU_DE, KENH, phutDocBai, ngayVN, chiBaiDang, thoiLuongISO } from '../../lib/bai';
 
 export async function getStaticPaths() {
   const ds = chiBaiDang(await getCollection('bai'));
@@ -32,7 +33,23 @@ const anhChiaSe = d.anh
   ? (await getImage({ src: d.anh, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src
   : undefined;
 
-const jsonLd = {
+// Video đặt giữa bài: cắt thân bài tại dòng <div data-video></div>,
+// không có thì cắt trước mục lớn (h2) nằm giữa bài.
+let thanBai: [string, string] | undefined;
+if (d.video) {
+  const html = bai.rendered?.html ?? '';
+  const moc = /<div data-video(="")?><\/div>/;
+  if (moc.test(html)) {
+    const [a, ...b] = html.split(moc);
+    thanBai = [a, b.join('')];
+  } else {
+    const vt = [...html.matchAll(/<h2[\s>]/g)].map((m) => m.index!);
+    const cat = vt.length > 1 ? vt[Math.floor(vt.length / 2)] : html.length;
+    thanBai = [html.slice(0, cat), html.slice(cat)];
+  }
+}
+
+const jsonLd: Record<string, unknown> = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
   headline: d.tieuDe,
@@ -42,6 +59,18 @@ const jsonLd = {
   author: { '@type': 'Person', name: 'Lê Thu Giang' },
   inLanguage: 'vi',
 };
+if (d.video) {
+  jsonLd.video = {
+    '@type': 'VideoObject',
+    name: d.video.tieuDe,
+    description: d.moTa,
+    thumbnailUrl: `https://i.ytimg.com/vi/${d.video.id}/maxresdefault.jpg`,
+    uploadDate: d.video.ngayDang.toISOString(),
+    duration: thoiLuongISO(d.video.thoiLuong),
+    embedUrl: `https://www.youtube.com/embed/${d.video.id}`,
+    contentUrl: `https://www.youtube.com/watch?v=${d.video.id}`,
+  };
+}
 ---
 
 <Layout title={`${d.tieuDe} - Lê Thu Giang`} description={d.moTa} anhChiaSe={anhChiaSe} loai="article">
@@ -62,6 +91,7 @@ const jsonLd = {
           <span class="by"><Image src={anhTacGia} alt="" width={64} height={64} fit="cover" position="top" />Lê Thu Giang</span>
           <span><time datetime={d.ngay.toISOString()}>{ngayVN(d.ngay)}</time></span>
           <span>{phut} phút đọc</span>
+          {d.video && <a href="#video" class="has-video">Có video · {d.video.thoiLuong}</a>}
           {d.capNhat && <span>Cập nhật {ngayVN(d.capNhat)}</span>}
         </div>
         <div class="post-tools">
@@ -102,7 +132,15 @@ const jsonLd = {
             </div>
           )}
 
-          <div class="prose"><Content /></div>
+          {thanBai && d.video ? (
+            <div class="prose">
+              <Fragment set:html={thanBai[0]} />
+              <div id="video"><VideoYoutube {...d.video} /></div>
+              <Fragment set:html={thanBai[1]} />
+            </div>
+          ) : (
+            <div class="prose"><Content /></div>
+          )}
 
           {(d.nen.length > 0 || d.tranh.length > 0) && (
             <div role="region" class="do-dont" aria-label="Nên và tránh">
@@ -134,7 +172,10 @@ const jsonLd = {
             <div>
               <strong>Lê Thu Giang</strong>
               <p>Người đồng hành cùng phụ nữ bận rộn trên hành trình chăm sóc bản thân từ bên trong. Chia sẻ kiến thức chăm da khoa học, đơn giản, làm được tại nhà.</p>
-              <a href="/#ve-giang" class="more">Về Giang →</a>
+              <span class="author-links">
+                <a href="/#ve-giang" class="more">Về Giang →</a>
+                <a href={KENH.youtube} class="more" target="_blank" rel="noopener">Kênh YouTube →</a>
+              </span>
             </div>
           </aside>
 

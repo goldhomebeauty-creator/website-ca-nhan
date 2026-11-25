@@ -35,3 +35,22 @@ export function phutDocBai(b: CollectionEntry<'bai'>): number {
   const them = [...d.tomTat, ...d.nen, ...d.tranh, ...d.gapBacSi, ...d.hoiDap.flatMap((q) => [q.hoi, q.dap])].join(' ');
   return phutDoc(`${b.body ?? ''} ${them}`);
 }
+
+export const KENH = {
+  youtube: 'https://www.youtube.com/@L%C3%AAThuGiangOfficial',
+  facebook: 'https://www.facebook.com/lethugiang.official',
+  messenger: 'https://m.me/lethugiang.official',
+  zalo: 'https://zalo.me/0946789136',
+};
+
+/** "5:55" hoặc "1:02:03" ra số giây. */
+export function giay(moc: string): number {
+  return moc.split(':').reduce((tong, so) => tong * 60 + Number(so), 0);
+}
+
+/** "5:55" ra dạng ISO 8601 cho Google: PT5M55S */
+export function thoiLuongISO(moc: string): string {
+  const s = giay(moc);
+  const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), r = s % 60;
+  return `PT${h ? h + 'H' : ''}${m ? m + 'M' : ''}${r}S`;
+}
