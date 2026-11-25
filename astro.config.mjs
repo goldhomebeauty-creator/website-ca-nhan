@@ -5,7 +5,9 @@ import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
 export default defineConfig({
-  adapter: cloudflare(),
+  // Ảnh được Astro nén và chia cỡ ngay lúc build bằng sharp (miễn phí),
+  // không gọi dịch vụ Cloudflare Images lúc chạy.
+  adapter: cloudflare({ imageService: 'compile' }),
   // Blog là trang tĩnh, không dùng Astro sessions. Tắt để adapter không tự thêm
   // binding KV "SESSION" thiếu namespace_id (Cloudflare từ chối deploy, mã 10021).
   session: false,

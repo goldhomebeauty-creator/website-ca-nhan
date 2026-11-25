@@ -24,3 +24,6 @@ pnpm-debug.log*
 .idea/
 .wrangler/
 .dev.vars*
+
+# ảnh gốc chưa nén (giữ trên Drive, không đưa lên repo)
+anh-goc/

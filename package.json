@@ -12,11 +12,15 @@
     "astro": "astro",
     "generate-types": "wrangler types",
     "deploy": "astro build && wrangler deploy",
-    "cf-preview": "astro build && wrangler dev"
+    "cf-preview": "astro build && wrangler dev",
+    "nen-anh": "node scripts/nen-anh.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.4.9",
     "astro": "^7.4.13",
     "wrangler": "^4.168.0"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5"
   }
 }
