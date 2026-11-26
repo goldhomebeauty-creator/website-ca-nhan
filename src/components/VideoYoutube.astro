@@ -1,0 +1,58 @@
+---
+// Khung video YouTube nhẹ: chỉ hiện ảnh bìa, bấm mới tải trình phát (trang mở nhanh hơn).
+import { KENH, giay } from '../lib/bai';
+interface Props { id: string; tieuDe: string; thoiLuong: string; chuong?: { t: string; ten: string }[] }
+const { id, tieuDe, thoiLuong, chuong = [] } = Astro.props;
+---
+
+<figure class="video-box" data-yt={id}>
+  <div class="video-frame">
+    <button type="button" class="video-play" aria-label={`Phát video: ${tieuDe}`}>
+      <img src={`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`} alt="" width="1280" height="720" loading="lazy" decoding="async" onerror={`this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg'`} />
+      <span class="video-btn" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg></span>
+      <span class="video-len">{thoiLuong}</span>
+    </button>
+  </div>
+  <figcaption>
+    <span class="video-label">Video của Giang</span>
+    <strong>{tieuDe}</strong>
+    <span class="video-links">
+      <a href={`https://www.youtube.com/watch?v=${id}`} target="_blank" rel="noopener">Xem trên YouTube</a>
+      <a href={`${KENH.youtube}?sub_confirmation=1`} target="_blank" rel="noopener">Đăng ký kênh</a>
+    </span>
+  </figcaption>
+  {chuong.length > 0 && (
+    <ol class="video-chapters" aria-label="Các đoạn trong video">
+      {chuong.map((c) => (
+        <li><button type="button" data-t={giay(c.t)}><span>{c.t}</span>{c.ten}</button></li>
+      ))}
+    </ol>
+  )}
+</figure>
+
+<script is:inline>
+(function () {
+  document.querySelectorAll('[data-yt]').forEach(function (box) {
+    if (box.dataset.san) return;
+    box.dataset.san = '1';
+    var id = box.getAttribute('data-yt');
+    var frame = box.querySelector('.video-frame');
+    function phat(tu) {
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1' + (tu ? '&start=' + tu : '');
+      f.title = box.querySelector('strong').textContent;
+      f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      f.allowFullscreen = true;
+      frame.innerHTML = '';
+      frame.appendChild(f);
+    }
+    box.querySelector('.video-play').addEventListener('click', function () { phat(0); });
+    box.querySelectorAll('[data-t]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        phat(parseInt(b.getAttribute('data-t'), 10));
+        frame.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+  });
+})();
+</script>

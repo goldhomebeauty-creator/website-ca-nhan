@@ -1,0 +1,263 @@
+---
+// Trang đọc bài: /bai/<tên-file>/
+import { getCollection, getEntries, render } from 'astro:content';
+import { Image, getImage } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import anhTacGia from '../../assets/anh/giang-chan-dung.webp';
+import VideoYoutube from '../../components/VideoYoutube.astro';
+import { CHU_DE, KENH, phutDocBai, ngayVN, chiBaiDang, thoiLuongISO } from '../../lib/bai';
+
+export async function getStaticPaths() {
+  const ds = chiBaiDang(await getCollection('bai'));
+  return ds.map((bai) => ({ params: { slug: bai.id }, props: { bai, ds } }));
+}
+
+const { bai, ds } = Astro.props;
+const d = bai.data;
+const { Content, headings } = await render(bai);
+const mucLuc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const chuDe = CHU_DE[d.chuDe];
+const phut = phutDocBai(bai);
+
+// Bài liên quan: bài chọn tay trước, rồi cùng chủ đề, rồi bài mới nhất
+const chonTay = (await getEntries(d.lienQuan)).filter(Boolean);
+const lienQuan = [
+  ...chonTay,
+  ...ds.filter((b) => b.data.chuDe === d.chuDe),
+  ...ds,
+]
+  .filter((b, i, arr) => b.id !== bai.id && arr.findIndex((x) => x.id === b.id) === i)
+  .slice(0, 3);
+
+const anhChiaSe = d.anh
+  ? (await getImage({ src: d.anh, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src
+  : undefined;
+
+// Video đặt giữa bài: cắt thân bài tại dòng <div data-video></div>,
+// không có thì cắt trước mục lớn (h2) nằm giữa bài.
+let thanBai: [string, string] | undefined;
+if (d.video) {
+  const html = bai.rendered?.html ?? '';
+  const moc = /<div data-video(="")?><\/div>/;
+  if (moc.test(html)) {
+    const [a, ...b] = html.split(moc);
+    thanBai = [a, b.join('')];
+  } else {
+    const vt = [...html.matchAll(/<h2[\s>]/g)].map((m) => m.index!);
+    const cat = vt.length > 1 ? vt[Math.floor(vt.length / 2)] : html.length;
+    thanBai = [html.slice(0, cat), html.slice(cat)];
+  }
+}
+
+const jsonLd: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: d.tieuDe,
+  description: d.moTa,
+  datePublished: d.ngay.toISOString(),
+  dateModified: (d.capNhat ?? d.ngay).toISOString(),
+  author: { '@type': 'Person', name: 'Lê Thu Giang' },
+  inLanguage: 'vi',
+};
+if (d.video) {
+  jsonLd.video = {
+    '@type': 'VideoObject',
+    name: d.video.tieuDe,
+    description: d.moTa,
+    thumbnailUrl: `https://i.ytimg.com/vi/${d.video.id}/maxresdefault.jpg`,
+    uploadDate: d.video.ngayDang.toISOString(),
+    duration: thoiLuongISO(d.video.thoiLuong),
+    embedUrl: `https://www.youtube.com/embed/${d.video.id}`,
+    contentUrl: `https://www.youtube.com/watch?v=${d.video.id}`,
+  };
+}
+---
+
+<Layout title={`${d.tieuDe} - Lê Thu Giang`} description={d.moTa} anhChiaSe={anhChiaSe} loai="article">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <div class="read-progress" aria-hidden="true"><span id="readBar"></span></div>
+
+  <main id="main">
+    <article class="post">
+      <div class="post-head">
+        <nav class="crumb" aria-label="Đường dẫn">
+          <a href="/">Trang chủ</a><span aria-hidden="true">/</span><a href="/#chu-de">{chuDe.ten}</a>
+        </nav>
+        <span class={`tag ${chuDe.the}`}>{chuDe.ten}</span>
+        <h1>{d.tieuDe}</h1>
+        <p class="lead">{d.moTa}</p>
+        <div class="post-meta">
+          <span class="by"><Image src={anhTacGia} alt="" width={64} height={64} fit="cover" position="top" />Lê Thu Giang</span>
+          <span><time datetime={d.ngay.toISOString()}>{ngayVN(d.ngay)}</time></span>
+          <span>{phut} phút đọc</span>
+          {d.video && <a href="#video" class="has-video">Có video · {d.video.thoiLuong}</a>}
+          {d.capNhat && <span>Cập nhật {ngayVN(d.capNhat)}</span>}
+        </div>
+        <div class="post-tools">
+          <div class="font-size" role="group" aria-label="Cỡ chữ bài viết">
+            <button type="button" class="icon-btn" data-co="-1" aria-label="Thu nhỏ chữ">A-</button>
+            <button type="button" class="icon-btn" data-co="1" aria-label="Phóng to chữ">A+</button>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm" id="copyLink">Sao chép link</button>
+          <a class="btn btn-ghost btn-sm" id="shareFb" target="_blank" rel="noopener" aria-label="Chia sẻ lên Facebook" href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(new URL(Astro.url.pathname, Astro.site ?? Astro.url).href)}`}>Facebook</a>
+        </div>
+      </div>
+
+      {d.anh && (
+        <figure class="post-cover">
+          <Image src={d.anh} alt={d.anhMoTa ?? ''} widths={[640, 960, 1280]} sizes="(max-width: 1000px) 100vw, 960px" loading="eager" fetchpriority="high" />
+        </figure>
+      )}
+
+      <div class="post-grid">
+        {mucLuc.length > 1 && (
+          <aside class="toc">
+            <details open id="tocBox">
+              <summary>Mục lục</summary>
+              <ol>
+                {mucLuc.map((h) => (
+                  <li class={h.depth === 3 ? 'sub' : undefined}><a href={`#${h.slug}`} data-toc={h.slug}>{h.text}</a></li>
+                ))}
+              </ol>
+            </details>
+          </aside>
+        )}
+
+        <div class="post-body" id="postBody">
+          {d.tomTat.length > 0 && (
+            <div role="region" class="box box-sum" aria-label="Tóm tắt">
+              <h2 class="box-title">Tóm tắt 30 giây</h2>
+              <ul>{d.tomTat.map((y) => <li>{y}</li>)}</ul>
+            </div>
+          )}
+
+          {thanBai && d.video ? (
+            <div class="prose">
+              <Fragment set:html={thanBai[0]} />
+              <div id="video"><VideoYoutube {...d.video} /></div>
+              <Fragment set:html={thanBai[1]} />
+            </div>
+          ) : (
+            <div class="prose"><Content /></div>
+          )}
+
+          {(d.nen.length > 0 || d.tranh.length > 0) && (
+            <div role="region" class="do-dont" aria-label="Nên và tránh">
+              {d.nen.length > 0 && (
+                <div class="box box-do"><h2 class="box-title">Nên</h2><ul>{d.nen.map((y) => <li>{y}</li>)}</ul></div>
+              )}
+              {d.tranh.length > 0 && (
+                <div class="box box-dont"><h2 class="box-title">Tránh</h2><ul>{d.tranh.map((y) => <li>{y}</li>)}</ul></div>
+              )}
+            </div>
+          )}
+
+          {d.gapBacSi.length > 0 && (
+            <div role="region" class="box box-doctor" aria-label="Khi nào cần gặp bác sĩ">
+              <h2 class="box-title">Khi nào cần gặp bác sĩ da liễu</h2>
+              <ul>{d.gapBacSi.map((y) => <li>{y}</li>)}</ul>
+            </div>
+          )}
+
+          {d.hoiDap.length > 0 && (
+            <div role="region" class="post-faq" aria-label="Hỏi đáp">
+              <h2 class="box-title">Hỏi nhanh, đáp gọn</h2>
+              {d.hoiDap.map((q) => <details><summary>{q.hoi}</summary><p>{q.dap}</p></details>)}
+            </div>
+          )}
+
+          <aside class="author">
+            <Image src={anhTacGia} alt="Chân dung Lê Thu Giang" width={160} height={160} fit="cover" position="top" />
+            <div>
+              <strong>Lê Thu Giang</strong>
+              <p>Người đồng hành cùng phụ nữ bận rộn trên hành trình chăm sóc bản thân từ bên trong. Chia sẻ kiến thức chăm da khoa học, đơn giản, làm được tại nhà.</p>
+              <span class="author-links">
+                <a href="/#ve-giang" class="more">Về Giang →</a>
+                <a href={KENH.youtube} class="more" target="_blank" rel="noopener">Kênh YouTube →</a>
+              </span>
+            </div>
+          </aside>
+
+          <p class="post-note">Bài viết mang tính tham khảo, không thay thế chẩn đoán và điều trị của bác sĩ da liễu.</p>
+        </div>
+      </div>
+    </article>
+
+    {lienQuan.length > 0 && (
+      <section class="wrap related">
+        <div class="sec-head"><div><h2>Đọc tiếp</h2><p>Những bài cùng chủ đề chị có thể quan tâm</p></div></div>
+        <div class="grid-3">
+          {lienQuan.map((b) => (
+            <a href={`/bai/${b.id}/`} class="card">
+              {b.data.anh && (
+                <div class="thumb photo"><Image src={b.data.anh} alt={b.data.anhMoTa ?? ''} widths={[400, 720]} sizes="(max-width: 600px) 100vw, 360px" /></div>
+              )}
+              <div class="card-body">
+                <span><span class={`tag ${CHU_DE[b.data.chuDe].the}`}>{CHU_DE[b.data.chuDe].ten}</span></span>
+                <h3>{b.data.tieuDe}</h3>
+                <div class="meta"><span>{ngayVN(b.data.ngay)}</span><span>{phutDocBai(b)} phút đọc</span></div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </main>
+
+  <script is:inline>
+  (function () {
+    // Thanh tiến độ đọc: tính theo phần thân bài
+    var bar = document.getElementById('readBar');
+    var body = document.getElementById('postBody');
+    function tienDo() {
+      var r = body.getBoundingClientRect();
+      var tong = r.height - window.innerHeight;
+      var p = tong > 0 ? Math.min(1, Math.max(0, -r.top / tong)) : 1;
+      bar.style.transform = 'scaleX(' + p + ')';
+    }
+    window.addEventListener('scroll', tienDo, { passive: true });
+    window.addEventListener('resize', tienDo);
+    tienDo();
+
+    // Cỡ chữ: 5 nấc, ghi nhớ cho lần sau
+    var NAC = [16, 17, 18, 20, 22];
+    var nac = 2;
+    try { var luu = parseInt(localStorage.getItem('coChu'), 10); if (luu >= 0 && luu < NAC.length) nac = luu; } catch (e) {}
+    function apCo() { document.documentElement.style.setProperty('--doc-size', NAC[nac] + 'px'); }
+    apCo();
+    document.querySelectorAll('[data-co]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        nac = Math.min(NAC.length - 1, Math.max(0, nac + parseInt(b.getAttribute('data-co'), 10)));
+        apCo();
+        try { localStorage.setItem('coChu', nac); } catch (e) {}
+      });
+    });
+
+    // Sao chép link
+    var copy = document.getElementById('copyLink');
+    copy.addEventListener('click', function () {
+      var xong = function () { copy.textContent = 'Đã sao chép'; setTimeout(function () { copy.textContent = 'Sao chép link'; }, 2000); };
+      if (navigator.clipboard) navigator.clipboard.writeText(location.href).then(xong, function () {});
+    });
+
+    // Mục lục: thu gọn trên điện thoại, đánh dấu mục đang đọc
+    var toc = document.getElementById('tocBox');
+    if (toc && window.matchMedia('(max-width: 1000px)').matches) toc.removeAttribute('open');
+    var links = document.querySelectorAll('[data-toc]');
+    if (links.length && 'IntersectionObserver' in window) {
+      var map = {};
+      links.forEach(function (a) { map[a.getAttribute('data-toc')] = a; });
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting) return;
+          links.forEach(function (a) { a.removeAttribute('aria-current'); });
+          var a = map[en.target.id];
+          if (a) a.setAttribute('aria-current', 'true');
+        });
+      }, { rootMargin: '-80px 0px -70% 0px' });
+      Object.keys(map).forEach(function (id) { var h = document.getElementById(id); if (h) io.observe(h); });
+    }
+  })();
+  </script>
+</Layout>
