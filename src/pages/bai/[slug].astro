@@ -31,7 +31,7 @@ const lienQuan = [
   .slice(0, 3);
 
 const anhChiaSe = d.anh
-  ? (await getImage({ src: d.anh, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src
+  ? (await getImage({ src: d.anh, width: 1200, height: 630, fit: 'cover', position: d.anhViTri ? 'attention' : 'centre', format: 'jpg' })).src
   : undefined;
 
 // Video đặt giữa bài: cắt thân bài tại dòng <div data-video></div>,
@@ -106,8 +106,8 @@ if (d.video) {
       </div>
 
       {d.anh && (
-        <figure class="post-cover">
-          <Image src={d.anh} alt={d.anhMoTa ?? ''} widths={[640, 960, 1280]} sizes="(max-width: 1000px) 100vw, 960px" loading="eager" fetchpriority="high" />
+        <figure class:list={['post-cover', { doc: d.anh.height > d.anh.width }]}>
+          <Image src={d.anh} alt={d.anhMoTa ?? ''} widths={[640, 960, 1280]} sizes={d.anh.height > d.anh.width ? '(max-width: 600px) 100vw, 560px' : '(max-width: 1000px) 100vw, 960px'} loading="eager" fetchpriority="high" style={d.anhViTri ? `object-position:${d.anhViTri}` : undefined} />
           {d.anhChuThich && <figcaption>{d.anhChuThich}</figcaption>}
         </figure>
       )}
