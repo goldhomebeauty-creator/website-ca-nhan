@@ -27,9 +27,19 @@ const ICON: Record<MaChuDe, { mau: string; nen: string; svg: string }> = {
   'song-khoe': { mau: 'var(--teal)', nen: 'var(--teal-soft)', svg: '<path d="M3 20l6-10 4 6 3-4 5 8z"/><circle cx="17" cy="6" r="2"/>' },
   'goc-tam-su': { mau: 'var(--blue)', nen: 'var(--blue-soft)', svg: '<path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>' },
 };
+// Dữ liệu cấu trúc cho Google: trang này là blog của Lê Thu Giang, không phải trang nào khác.
+const goc = Astro.site ?? Astro.url;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'WebSite', '@id': new URL('/#website', goc).href, name: 'Lê Thu Giang', url: new URL('/', goc).href, inLanguage: 'vi-VN', publisher: { '@id': new URL('/ve-giang/#giang', goc).href } },
+    { '@type': 'Person', '@id': new URL('/ve-giang/#giang', goc).href, name: 'Lê Thu Giang', url: new URL('/ve-giang/', goc).href, sameAs: [KENH.youtube, KENH.facebook] },
+  ],
+};
 ---
 
 <Layout current="home">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
   <main id="main">
     <!-- ================= HERO ================= -->
