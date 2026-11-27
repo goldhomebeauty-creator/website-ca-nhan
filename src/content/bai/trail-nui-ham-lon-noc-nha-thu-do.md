@@ -4,6 +4,7 @@ moTa: "Giang chạy trail núi Hàm Lợn, nóc nhà Thủ đô cao 462m: 20,34 
 ngay: 2026-11-27
 chuDe: song-khoe
 anh: ../../assets/anh/ham-lon-ngoi-ben-da-quy.webp
+anhViTri: "50% 85%"
 anhMoTa: "Lê Thu Giang đội mũ lưỡi trai trắng, ngồi nghỉ bên bụi dã quỳ nở vàng trên đường lên núi Hàm Lợn"
 lienQuan:
   - kien-nhan-khi-cham-da

@@ -287,6 +287,9 @@ footer { border-top: 1px solid var(--line); margin-top: 56px; padding: 48px 0 32
 .btn-sm { padding: 8px 14px; font-size: 14px; }
 .post-cover { max-width: 1008px; margin: 36px auto 0; padding: 0 24px; }
 .post-cover img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 20px; }
+/* Ảnh bìa dọc (chụp điện thoại): giữ khung 4:5, không ép ngang để khỏi mất mặt người */
+.post-cover.doc { max-width: 608px; }
+.post-cover.doc img { aspect-ratio: 4 / 5; }
 
 .post-grid { max-width: var(--max); margin: 48px auto 0; padding: 0 24px; display: grid; grid-template-columns: 240px minmax(0, 700px); justify-content: center; gap: 56px; }
 .toc { position: sticky; top: 92px; align-self: start; max-height: calc(100vh - 110px); overflow: auto; font-size: 14.5px; }

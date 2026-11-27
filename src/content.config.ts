@@ -16,6 +16,8 @@ const bai = defineCollection({
       anh: image().optional(),
       anhMoTa: z.string().optional(),
       anhChuThich: z.string().optional(),
+      // Điểm giữ lại khi ảnh bị cắt khung (CSS object-position), vd "50% 80%" cho ảnh dọc có người ở phía dưới
+      anhViTri: z.string().regex(/^\d{1,3}% \d{1,3}%$/).optional(),
       // Khung "Tóm tắt 30 giây" ở đầu bài
       tomTat: z.array(z.string()).default([]),
       // Hộp "Nên / Tránh" sau phần thân bài

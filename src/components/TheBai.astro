@@ -19,7 +19,7 @@ const widths = co === 'big' ? [480, 760, 1100] : co === 'side' ? [320, 560] : [4
 ---
 <a href={`/bai/${bai.id}/`} class:list={['card reveal', { big: co === 'big' }]} data-tim={`${d.tieuDe} ${d.moTa} ${chuDe.ten}`.toLowerCase()}>
   {d.anh && (
-    <div class="thumb photo"><Image src={d.anh} alt={d.anhMoTa ?? ''} widths={widths} sizes={sizes} /></div>
+    <div class="thumb photo"><Image src={d.anh} alt={d.anhMoTa ?? ''} widths={widths} sizes={sizes} style={d.anhViTri ? `object-position:${d.anhViTri}` : undefined} /></div>
   )}
   <div class="card-body">
     <span><span class={`tag ${chuDe.the}`}>{chuDe.ten}</span></span>
