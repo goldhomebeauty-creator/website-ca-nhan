@@ -15,6 +15,7 @@ const bai = defineCollection({
       chuDe: z.enum(['cham-da', 'nam-sam', 'loi-song', 'goc-tam-su']),
       anh: image().optional(),
       anhMoTa: z.string().optional(),
+      anhChuThich: z.string().optional(),
       // Khung "Tóm tắt 30 giây" ở đầu bài
       tomTat: z.array(z.string()).default([]),
       // Hộp "Nên / Tránh" sau phần thân bài
