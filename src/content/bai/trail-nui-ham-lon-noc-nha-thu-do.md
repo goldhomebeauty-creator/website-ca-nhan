@@ -6,9 +6,9 @@ chuDe: song-khoe
 anh: ../../assets/anh/ham-lon-ngoi-ben-da-quy.webp
 anhMoTa: "Lê Thu Giang đội mũ lưỡi trai trắng, ngồi nghỉ bên bụi dã quỳ nở vàng trên đường lên núi Hàm Lợn"
 lienQuan:
-  - kien-nhan-voi-lan-da
-  - chong-nang-cho-da-bi-nam
-  - ngu-du-da-dep
+  - kien-nhan-khi-cham-da
+  - chong-nang-cho-da-nam
+  - giac-ngu-va-lan-da
 tomTat:
   - "Hàm Lợn ở Sóc Sơn, Hà Nội, cột mốc trên đỉnh ghi nóc nhà Thủ đô, cao độ 462m."
   - "Đồng hồ của Giang ghi 20,34 km, tổng thời gian 6 giờ 24 phút."
@@ -62,7 +62,7 @@ Lên tới đỉnh, Giang chụp lại tấm ảnh bên cột mốc 462m, kèm s
 
 Gần 19 phút cho một km, nếu so với chạy đường phố thì rất chậm. Nhưng trail không đo bằng tốc độ. Đường núi có dốc đá, có đất trơn, có những đoạn phải chống gậy mà bước từng bước. Điều quan trọng là đi đến cuối, và về nhà an toàn.
 
-Chuyện này cũng giống chăm da: không có đường tắt, chỉ có đi đều và đủ lâu. Giang đã viết về điều đó trong bài [kiên nhẫn với làn da](/bai/kien-nhan-voi-lan-da/).
+Chuyện này cũng giống chăm da: không có đường tắt, chỉ có đi đều và đủ lâu. Giang đã viết về điều đó trong bài [kiên nhẫn với làn da](/bai/kien-nhan-khi-cham-da/).
 
 ## Vận động đều đặn mang lại gì cho chị?
 
@@ -78,9 +78,9 @@ Cục Vườn quốc gia Hoa Kỳ (NPS) có bộ lời khuyên an toàn khi đi 
 2. **Để lại lịch trình.** Báo cho một người thân không đi cùng biết chị đi đâu, đi với ai, mấy giờ dự kiến về.
 3. **Đi cùng nhau.** Để người đi chậm nhất giữ nhịp cho cả đoàn, không ai bị bỏ lại phía sau.
 4. **Mang đủ nước** cho cả ngày và đừng cố quá sức.
-5. **Chống nắng kỹ.** Bôi kem chống nắng trước khi đi, bôi lại khoảng mỗi 2 giờ và ngay sau khi ra nhiều mồ hôi. Đội mũ, mặc áo dài tay mỏng. Chi tiết trong bài [chống nắng cho da bị nám](/bai/chong-nang-cho-da-bi-nam/).
+5. **Chống nắng kỹ.** Bôi kem chống nắng trước khi đi, bôi lại khoảng mỗi 2 giờ và ngay sau khi ra nhiều mồ hôi. Đội mũ, mặc áo dài tay mỏng. Chi tiết trong bài [chống nắng cho da bị nám](/bai/chong-nang-cho-da-nam/).
 
-Và sau một ngày vận động dài, hãy cho cơ thể ngủ một giấc thật đủ. Vì sao giấc ngủ quan trọng với cả làn da, chị đọc thêm bài [ngủ đủ để da đẹp](/bai/ngu-du-da-dep/).
+Và sau một ngày vận động dài, hãy cho cơ thể ngủ một giấc thật đủ. Vì sao giấc ngủ quan trọng với cả làn da, chị đọc thêm bài [ngủ đủ để da đẹp](/bai/giac-ngu-va-lan-da/).
 
 ## Nguồn tham khảo
 - [World Health Organization: Physical activity fact sheet](https://www.who.int/news-room/fact-sheets/detail/physical-activity)

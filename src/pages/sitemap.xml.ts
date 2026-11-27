@@ -16,7 +16,7 @@ export const GET: APIRoute = async ({ site }) => {
     ...['/bai/', '/ve-giang/', ...Object.keys(CHU_DE).map((ma) => `/chu-de/${ma}/`)].map(
       (duong) => `<url><loc>${new URL(duong, goc).href}</loc>${ngay(moiNhat)}</url>`,
     ),
-    ...bai.map((b) => `<url><loc>${new URL(`/bai/${b.id}/`, goc).href}</loc>${ngay(b.data.ngay)}</url>`),
+    ...bai.map((b) => `<url><loc>${new URL(`/bai/${b.id}/`, goc).href}</loc>${ngay(b.data.capNhat ?? b.data.ngay)}</url>`),
   ];
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${dong.join('\n')}\n</urlset>\n`;
   return new Response(xml, { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });

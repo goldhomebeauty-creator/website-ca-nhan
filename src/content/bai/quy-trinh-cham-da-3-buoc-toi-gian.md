@@ -7,8 +7,8 @@ anh: ../../assets/anh/duong-da-buoi-toi.webp
 anhMoTa: "Giang dưỡng da buổi tối"
 lienQuan:
   - da-thuoc-loai-nao
-  - chong-nang-cho-da-bi-nam
-  - kien-nhan-voi-lan-da
+  - chong-nang-cho-da-nam
+  - kien-nhan-khi-cham-da
 tomTat:
   - "Ba bước nền tảng: làm sạch dịu nhẹ, dưỡng ẩm, chống nắng buổi sáng."
   - "Rửa mặt bằng nước ấm, xoa nhẹ bằng đầu ngón tay, thấm khô, không chà."
@@ -60,18 +60,18 @@ Chọn kết cấu theo loại da: da dầu dùng dạng gel mỏng, da khô dù
 
 Đây là bước quan trọng nhất để da khỏe lâu dài và ngừa nám, sạm. Chọn kem chống nắng phổ rộng, SPF 30 trở lên, bôi đủ lượng lên toàn bộ mặt và cổ khoảng 15 phút trước khi ra ngoài, bôi lại khi ở ngoài trời lâu hoặc đổ mồ hôi.
 
-Giang có bài riêng hướng dẫn kỹ: [chống nắng cho da bị nám](/bai/chong-nang-cho-da-bi-nam/).
+Giang có bài riêng hướng dẫn kỹ: [chống nắng cho da bị nám](/bai/chong-nang-cho-da-nam/).
 
 ## Thứ tự sáng và tối
 
 - **Buổi sáng:** làm sạch → dưỡng ẩm → chống nắng.
 - **Buổi tối:** tẩy trang (nếu cần) → làm sạch → dưỡng ẩm.
 
-Mỗi buổi chỉ khoảng 5 phút. Với Giang, 5 phút buổi tối này cũng là lúc được chậm lại một chút cho mình, đúng như điều Giang viết trong bài [chăm sóc bản thân không phải là ích kỷ](/bai/cham-soc-ban-than-khong-phai-ich-ky/).
+Mỗi buổi chỉ khoảng 5 phút. Với Giang, 5 phút buổi tối này cũng là lúc được chậm lại một chút cho mình, đúng như điều Giang viết trong bài [chăm sóc bản thân không phải là ích kỷ](/bai/cham-soc-ban-than-khong-ich-ky/).
 
 ## Khi nào mới thêm hoạt chất?
 
-Khi da đã ổn định với ba bước và chị có một mục tiêu cụ thể, ví dụ làm sáng vết nám. Hãy thêm **từng sản phẩm một**, thử trước ở một vùng nhỏ vài ngày, rồi theo dõi. Các hoạt chất phù hợp cho da nám có trong bài [hoạt chất làm sáng nám an toàn](/bai/hoat-chat-lam-sang-nam-an-toan/). Và hãy cho làn da thời gian, vì sao thì bài [kiên nhẫn với làn da](/bai/kien-nhan-voi-lan-da/) sẽ giải thích.
+Khi da đã ổn định với ba bước và chị có một mục tiêu cụ thể, ví dụ làm sáng vết nám. Hãy thêm **từng sản phẩm một**, thử trước ở một vùng nhỏ vài ngày, rồi theo dõi. Các hoạt chất phù hợp cho da nám có trong bài [hoạt chất làm sáng nám an toàn](/bai/hoat-chat-lam-sang-nam/). Và hãy cho làn da thời gian, vì sao thì bài [kiên nhẫn với làn da](/bai/kien-nhan-khi-cham-da/) sẽ giải thích.
 
 ## Nguồn tham khảo
 - [American Academy of Dermatology: Face washing 101](https://www.aad.org/public/everyday-care/skin-care-basics/care/face-washing-101)

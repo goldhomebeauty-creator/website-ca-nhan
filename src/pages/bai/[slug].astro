@@ -50,6 +50,9 @@ if (d.video) {
   }
 }
 
+// Địa chỉ gốc và URL chuẩn của bài, dùng cho dữ liệu cấu trúc.
+const goc = Astro.site ?? Astro.url;
+const urlBai = new URL(`/bai/${bai.id}/`, goc).href;
 const jsonLd: Record<string, unknown> = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
@@ -57,9 +60,14 @@ const jsonLd: Record<string, unknown> = {
   description: d.moTa,
   datePublished: d.ngay.toISOString(),
   dateModified: (d.capNhat ?? d.ngay).toISOString(),
-  author: { '@type': 'Person', name: 'Lê Thu Giang' },
+  author: { '@type': 'Person', '@id': new URL('/ve-giang/#giang', goc).href, name: 'Lê Thu Giang', url: new URL('/ve-giang/', goc).href },
+  publisher: { '@id': new URL('/ve-giang/#giang', goc).href },
+  url: urlBai,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': urlBai },
   inLanguage: 'vi',
 };
+// Ảnh bài cho Google (cùng ảnh chia sẻ 1200x630).
+if (anhChiaSe) jsonLd.image = [new URL(anhChiaSe, goc).href];
 if (d.video) {
   jsonLd.video = {
     '@type': 'VideoObject',

@@ -8,7 +8,7 @@ anhMoTa: "Giang tư vấn và soi da cho khách"
 lienQuan:
   - quy-trinh-cham-da-3-buoc-toi-gian
   - cach-doc-bang-thanh-phan-my-pham
-  - kien-nhan-voi-lan-da
+  - kien-nhan-khi-cham-da
 tomTat:
   - "Có 5 loại da hay gặp: thường, khô, dầu, hỗn hợp và nhạy cảm."
   - "Cách dễ nhất: rửa mặt, chờ khoảng 30 phút đến một tiếng rồi quan sát và thấm giấy."
