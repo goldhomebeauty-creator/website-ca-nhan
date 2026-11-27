@@ -3,9 +3,10 @@ tieuDe: "Trail núi Hàm Lợn: 20 km lên nóc nhà Thủ đô"
 moTa: "Giang chạy trail núi Hàm Lợn, nóc nhà Thủ đô cao 462m: 20,34 km qua rừng thông, mùa dã quỳ, nhà thờ cổ, cùng vài lưu ý cho chị muốn thử trail lần đầu."
 ngay: 2026-11-27
 chuDe: song-khoe
-anh: ../../assets/anh/ham-lon-ngoi-ben-da-quy.webp
-anhViTri: "50% 85%"
+anh: ../../assets/anh/ham-lon-bia-ngang.webp
+anhViTri: "40% 70%"
 anhMoTa: "Lê Thu Giang đội mũ lưỡi trai trắng, ngồi nghỉ bên bụi dã quỳ nở vàng trên đường lên núi Hàm Lợn"
+anhChuThich: "Ảnh bìa dựng lại khổ ngang bằng AI từ ảnh thật của Giang ở Hàm Lợn."
 lienQuan:
   - kien-nhan-khi-cham-da
   - chong-nang-cho-da-nam
