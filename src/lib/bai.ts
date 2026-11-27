@@ -17,6 +17,10 @@ export const CHU_DE = {
     ten: 'Góc tâm sự', the: 't-heart', tenDai: 'Góc tâm sự',
     gioiThieu: 'Yêu mình từ bên trong, sống chậm và tự tin hơn. Những điều Giang muốn ngồi nói với chị như hai chị em.',
   },
+  'song-khoe': {
+    ten: 'Sống khỏe', the: 't-khoe', tenDai: 'Sống khỏe',
+    gioiThieu: 'Những chuyến đi, những giải chạy marathon và trail đồi núi Giang đã qua. Chuyện sức bền, kỷ luật và niềm vui được vận động ngoài trời.',
+  },
 } as const;
 
 export type MaChuDe = keyof typeof CHU_DE;
