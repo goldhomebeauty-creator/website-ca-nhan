@@ -3,6 +3,7 @@
 import { getCollection, getEntries, render } from 'astro:content';
 import { Image, getImage } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
+import nhanMinhHoa from '../../assets/anh/cach-doc-bang-thanh-phan-my-pham-vi-du-nhan.webp?url';
 import anhTacGia from '../../assets/anh/giang-chan-dung.webp';
 import VideoYoutube from '../../components/VideoYoutube.astro';
 import TheBai from '../../components/TheBai.astro';
@@ -152,6 +153,10 @@ if (d.video) {
             <div class="prose"><Content /></div>
           )}
 
+          {bai.id === 'cach-doc-bang-thanh-phan-my-pham' && (
+            <p id="moNhanLon"><a href={nhanMinhHoa} target="_blank" rel="noopener">Mở ảnh nhãn minh hoạ cỡ lớn (tab mới)</a></p>
+          )}
+
           {(d.nen.length > 0 || d.tranh.length > 0) && (
             <div role="region" class="do-dont" aria-label="Nên và tránh">
               {d.nen.length > 0 && (
@@ -206,6 +211,20 @@ if (d.video) {
 
   <script is:inline>
   (function () {
+    // Giữ link mở ảnh khi tắt JavaScript; đưa link tới ngay dưới nhãn khi có JS.
+    var moNhan = document.getElementById('moNhanLon');
+    if (moNhan) {
+      var nhan = document.querySelector('.prose img[src*="cach-doc-bang-thanh-phan-my-pham-vi-du-nhan"]');
+      if (nhan && !nhan.closest('a')) {
+        var link = moNhan.querySelector('a').cloneNode(false);
+        link.setAttribute('aria-label', 'Mở ảnh nhãn minh hoạ cỡ lớn (tab mới)');
+        nhan.replaceWith(link);
+        link.appendChild(nhan);
+        var doan = link.closest('p');
+        if (doan) doan.after(moNhan);
+      }
+    }
+
     // Thanh tiến độ đọc: tính theo phần thân bài
     var bar = document.getElementById('readBar');
     var body = document.getElementById('postBody');
