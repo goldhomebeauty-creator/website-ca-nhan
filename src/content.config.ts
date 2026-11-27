@@ -12,7 +12,7 @@ const bai = defineCollection({
       moTa: z.string().max(200),
       ngay: z.coerce.date(),
       capNhat: z.coerce.date().optional(),
-      chuDe: z.enum(['cham-da', 'nam-sam', 'loi-song', 'goc-tam-su']),
+      chuDe: z.enum(['cham-da', 'nam-sam', 'loi-song', 'goc-tam-su', 'song-khoe']),
       anh: image().optional(),
       anhMoTa: z.string().optional(),
       anhChuThich: z.string().optional(),
