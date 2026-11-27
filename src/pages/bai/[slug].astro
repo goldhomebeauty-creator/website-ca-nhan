@@ -107,6 +107,7 @@ if (d.video) {
       {d.anh && (
         <figure class="post-cover">
           <Image src={d.anh} alt={d.anhMoTa ?? ''} widths={[640, 960, 1280]} sizes="(max-width: 1000px) 100vw, 960px" loading="eager" fetchpriority="high" />
+          {d.anhChuThich && <figcaption>{d.anhChuThich}</figcaption>}
         </figure>
       )}
 
