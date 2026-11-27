@@ -8,6 +8,7 @@ import { KENH } from '../lib/bai';
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
+  '@id': new URL('/ve-giang/#giang', Astro.site ?? Astro.url).href,
   name: 'Lê Thu Giang',
   url: new URL('/ve-giang/', Astro.site ?? Astro.url).href,
   sameAs: [KENH.youtube, KENH.facebook],
