@@ -194,6 +194,7 @@ details p { color: var(--muted); margin-top: 10px; font-size: 16px; }
 
 /* ---------- Newsletter ---------- */
 .news { text-align: center; background: var(--text); color: var(--bg); border-radius: 28px; padding: 56px 32px; }
+.news .btn-ghost { color: var(--text); }
 .news h2 { font-size: 30px; letter-spacing: -.02em; margin-bottom: 8px; }
 .news p { opacity: .75; max-width: 520px; margin: 0 auto; }
 .news form { display: flex; gap: 10px; max-width: 460px; margin: 28px auto 0; }
