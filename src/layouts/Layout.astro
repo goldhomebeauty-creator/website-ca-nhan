@@ -20,6 +20,7 @@ const {
 	anhChiaSe = '/og-image.jpg',
 	loai = 'website',
 } = Astro.props;
+const GA4_ID = 'G-2D913J7S9J';
 const base = Astro.site ?? Astro.url;
 const canonical = new URL(Astro.url.pathname, base).href;
 const ogImage = new URL(anhChiaSe, base).href;
@@ -63,6 +64,19 @@ const ogImage = new URL(anhChiaSe, base).href;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    {/* Google Analytics 4 (property lethugiang.com). Chỉ gắn ở bản chạy thật, không đếm lúc chạy thử. */}
+    {import.meta.env.PROD && (
+      <Fragment>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}></script>
+        <script is:inline define:vars={{ GA4_ID }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', GA4_ID);
+        </script>
+      </Fragment>
+    )}
   </head>
   <body>
     <Header current={current} />

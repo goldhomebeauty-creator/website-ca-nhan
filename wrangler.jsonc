@@ -6,7 +6,9 @@
 	"main": "@astrojs/cloudflare/entrypoints/server",
 	"assets": {
 		"directory": "./dist",
-		"binding": "ASSETS"
+		"binding": "ASSETS",
+		// Đường dẫn không có trang thì trả trang 404 của blog (mã 404), không trả trang trắng
+		"not_found_handling": "404-page"
 	},
 	"observability": {
 		"enabled": true

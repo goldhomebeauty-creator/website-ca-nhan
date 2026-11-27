@@ -1,0 +1,40 @@
+---
+// Trang chủ đề: /chu-de/<mã>/ , liệt kê các bài cùng chủ đề.
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import TheBai from '../../components/TheBai.astro';
+import { CHU_DE, chiBaiDang, type MaChuDe } from '../../lib/bai';
+
+export async function getStaticPaths() {
+  const ds = chiBaiDang(await getCollection('bai'));
+  return (Object.keys(CHU_DE) as MaChuDe[]).map((ma) => ({
+    params: { slug: ma },
+    props: { ma, ds: ds.filter((b) => b.data.chuDe === ma) },
+  }));
+}
+
+const { ma, ds } = Astro.props;
+const c = CHU_DE[ma as MaChuDe];
+---
+
+<Layout title={`${c.tenDai} - Lê Thu Giang`} description={c.gioiThieu} current={ma}>
+  <main id="main">
+    <div class="wrap trang-dau">
+      <nav class="crumb" aria-label="Đường dẫn"><a href="/">Trang chủ</a><span aria-hidden="true">/</span><a href="/bai/">Bài viết</a><span aria-hidden="true">/</span><span>{c.ten}</span></nav>
+      <span class={`tag ${c.the}`}>{c.ten}</span>
+      <h1>{c.tenDai}</h1>
+      <p class="lead">{c.gioiThieu}</p>
+      <div class="loc" role="group" aria-label="Chủ đề khác">
+        <a href="/bai/" class="chip">Tất cả</a>
+        {Object.entries(CHU_DE).map(([m, x]) => <a href={`/chu-de/${m}/`} class="chip" aria-current={m === ma ? 'page' : undefined}>{x.ten}</a>)}
+      </div>
+    </div>
+    <section class="wrap">
+      {ds.length > 0 ? (
+        <div class="grid-3">{ds.map((b) => <TheBai bai={b} />)}</div>
+      ) : (
+        <p class="trong">Giang đang viết những bài đầu tiên cho chủ đề này. Chị ghé lại sau ít hôm, hoặc <a href="/bai/">đọc các bài khác</a> trước nhé.</p>
+      )}
+    </section>
+  </main>
+</Layout>

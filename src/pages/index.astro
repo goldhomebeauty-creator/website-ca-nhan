@@ -1,19 +1,31 @@
 ---
 import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import { getEntry } from 'astro:content';
-import { phutDocBai } from '../lib/bai';
+import TheBai from '../components/TheBai.astro';
+import { CHU_DE, KENH, chiBaiDang, type MaChuDe } from '../lib/bai';
 import anhGhe from '../assets/anh/giang-ghe-sofa.webp';
 import anhChanDung from '../assets/anh/giang-chan-dung.webp';
-import anhSoiDa from '../assets/anh/tu-van-soi-da.webp';
-import anhHuongDan from '../assets/anh/huong-dan-cham-da.webp';
-import anhBien from '../assets/anh/giang-bien-mua-he.webp';
-import anhDocSach from '../assets/anh/giang-doc-sach.webp';
-import anhCafe from '../assets/anh/giang-cafe.webp';
-import anhTroChuyen from '../assets/anh/tro-chuyen-laptop.webp';
-import anhDuongDa from '../assets/anh/duong-da-buoi-toi.webp';
-const baiNam = await getEntry('bai', 'nam-da-la-gi');
-const phutNam = baiNam ? phutDocBai(baiNam) : 12;
+
+// Mọi thẻ trên trang chủ lấy từ bài thật trong src/content/bai, không còn thẻ giả.
+const ds = chiBaiDang(await getCollection('bai'));
+// Bài nổi bật: bài cũ nhất (bài nền tảng) làm thẻ lớn
+const noiBat = [...ds.filter((b) => b.data.noiBat).reverse(), ...ds].filter((b, i, arr) => arr.findIndex((x) => x.id === b.id) === i).slice(0, 3);
+const moiNhat = ds.filter((b) => !noiBat.some((n) => n.id === b.id)).slice(0, 6);
+const soBai = (ma: MaChuDe) => ds.filter((b) => b.data.chuDe === ma).length;
+const coBai = (id: string) => ds.some((b) => b.id === id);
+// Lộ trình 3 bước: trỏ tới bài thật, chưa có bài thì trỏ về trang chủ đề
+const loTrinh = [
+  { ten: 'Hiểu da', moTa: 'Xác định loại da, tình trạng da và điều làn da của chị đang cần.', link: 'da-thuoc-loai-nao', nhan: 'Da chị thuộc loại nào? →', duPhong: '/chu-de/cham-da/' },
+  { ten: 'Chọn đúng', moTa: 'Biết đọc thành phần, hiểu hoạt chất để không mua theo quảng cáo.', link: 'cach-doc-bang-thanh-phan-my-pham', nhan: 'Cách đọc bảng thành phần →', duPhong: '/chu-de/cham-da/' },
+  { ten: 'Làm đủ', moTa: 'Một quy trình tối giản, làm đều mỗi ngày và kiên nhẫn với kết quả.', link: 'quy-trinh-cham-da-3-buoc-toi-gian', nhan: 'Quy trình 3 bước tối giản →', duPhong: '/chu-de/cham-da/' },
+].map((x) => ({ ...x, href: coBai(x.link) ? `/bai/${x.link}/` : x.duPhong }));
+const ICON: Record<MaChuDe, { mau: string; nen: string; svg: string }> = {
+  'cham-da': { mau: 'var(--accent)', nen: 'var(--accent-soft)', svg: '<path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/>' },
+  'nam-sam': { mau: 'var(--gold)', nen: 'var(--gold-soft)', svg: '<circle cx="12" cy="12" r="8"/><circle cx="10" cy="10" r="1.5" fill="currentColor"/><circle cx="14.5" cy="14" r="2" fill="currentColor"/>' },
+  'loi-song': { mau: 'var(--green)', nen: 'var(--green-soft)', svg: '<path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/>' },
+  'goc-tam-su': { mau: 'var(--blue)', nen: 'var(--blue-soft)', svg: '<path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>' },
+};
 ---
 
 <Layout current="home">
@@ -41,42 +53,15 @@ const phutNam = baiNam ? phutDocBai(baiNam) : 12;
     <!-- ================= NỔI BẬT ================= -->
     <section class="wrap">
       <div class="sec-head reveal">
-        <div><h2>Bài nổi bật</h2><p>Những bài được chị em đọc và lưu lại nhiều nhất</p></div>
+        <div><h2>Bài nổi bật</h2><p>Những bài nền tảng Giang khuyên chị đọc trước</p></div>
       </div>
       <div class="featured">
-        <a href="/bai/nam-da-la-gi/" class="card big reveal">
-          <div class="thumb photo">
-            <Image src={anhSoiDa} alt="Giang soi da và tư vấn cho khách" widths={[480, 760, 1100]} sizes="(max-width: 820px) 100vw, 640px" />
+        {noiBat[0] && <TheBai bai={noiBat[0]} co="big" />}
+        {noiBat.length > 1 && (
+          <div class="side">
+            {noiBat.slice(1).map((b) => <TheBai bai={b} co="side" />)}
           </div>
-          <div class="card-body">
-            <span><span class="tag t-nam">Nám &amp; sạm</span></span>
-            <h3>Nám da là gì? Nguyên nhân và cách chăm sóc an toàn tại nhà</h3>
-            <p>Hiểu đúng cơ chế hình thành nám trước khi chọn bất kỳ sản phẩm nào. Bài nền tảng nên đọc đầu tiên nếu chị đang lo về nám.</p>
-            <div class="meta"><span>{phutNam} phút đọc</span><span>Bài nền tảng</span></div>
-          </div>
-        </a>
-        <div class="side">
-          <a href="#" class="card reveal">
-            <div class="thumb photo">
-              <Image src={anhHuongDan} alt="Giang hướng dẫn chăm da cho học viên" widths={[320, 560]} sizes="(max-width: 820px) 100vw, 220px" />
-            </div>
-            <div class="card-body">
-              <span><span class="tag t-nam">Nám &amp; sạm</span></span>
-              <h3>7 sai lầm khiến nám càng trị càng đậm</h3>
-              <div class="meta"><span>8 phút đọc</span></div>
-            </div>
-          </a>
-          <a href="#" class="card reveal">
-            <div class="thumb photo">
-              <Image src={anhBien} alt="Giang đội mũ, đeo kính râm bên bờ biển" widths={[320, 560]} sizes="(max-width: 820px) 100vw, 220px" style="object-position: 50% 70%" />
-            </div>
-            <div class="card-body">
-              <span><span class="tag t-skin">Chăm da</span></span>
-              <h3>Chống nắng đúng cách cho làn da đang bị nám</h3>
-              <div class="meta"><span>7 phút đọc</span></div>
-            </div>
-          </a>
-        </div>
+        )}
       </div>
     </section>
 
@@ -84,22 +69,12 @@ const phutNam = baiNam ? phutDocBai(baiNam) : 12;
     <section class="wrap" id="chu-de">
       <div class="sec-head reveal"><div><h2>Khám phá theo chủ đề</h2><p>Chọn điều chị đang quan tâm</p></div></div>
       <div class="topics">
-        <a href="#" class="topic reveal" style="color:var(--accent)">
-          <div class="ic" style="background:var(--accent-soft)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/></svg></div>
-          <h3>Chăm da cơ bản</h3><p>Làm sạch, dưỡng ẩm, chống nắng và cách đọc bảng thành phần.</p><small>24 bài viết</small>
-        </a>
-        <a href="#" class="topic reveal" style="color:var(--gold)">
-          <div class="ic" style="background:var(--gold-soft)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="10" cy="10" r="1.5" fill="currentColor"/><circle cx="14.5" cy="14" r="2" fill="currentColor"/></svg></div>
-          <h3>Nám &amp; sạm màu</h3><p>Nám nội tiết, nám sau sinh, hoạt chất làm sáng an toàn.</p><small>18 bài viết</small>
-        </a>
-        <a href="#" class="topic reveal" style="color:var(--green)">
-          <div class="ic" style="background:var(--green-soft)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg></div>
-          <h3>Lối sống kỷ luật</h3><p>Giấc ngủ, ăn uống, vận động và thói quen nhỏ mỗi ngày.</p><small>15 bài viết</small>
-        </a>
-        <a href="#" class="topic reveal" style="color:var(--blue)">
-          <div class="ic" style="background:var(--blue-soft)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg></div>
-          <h3>Góc tâm sự</h3><p>Yêu mình từ bên trong, sống chậm và tự tin hơn.</p><small>12 bài viết</small>
-        </a>
+        {(Object.keys(CHU_DE) as MaChuDe[]).map((ma) => (
+          <a href={`/chu-de/${ma}/`} class="topic reveal" style={`color:${ICON[ma].mau}`}>
+            <div class="ic" style={`background:${ICON[ma].nen}`}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={ICON[ma].svg} /></div>
+            <h3>{CHU_DE[ma].tenDai}</h3><p>{CHU_DE[ma].gioiThieu.split('.')[0]}.</p><small>{soBai(ma) > 0 ? `${soBai(ma)} bài viết` : 'Sắp có bài'}</small>
+          </a>
+        ))}
       </div>
     </section>
 
@@ -108,9 +83,7 @@ const phutNam = baiNam ? phutDocBai(baiNam) : 12;
       <div class="path reveal">
         <div class="sec-head"><div><h2>Mới bắt đầu? Đi theo 3 bước này</h2><p>Lộ trình Giang gợi ý cho người chưa biết bắt đầu từ đâu</p></div></div>
         <div class="steps">
-          <div class="step"><h3>Hiểu da</h3><p>Xác định loại da, tình trạng da và điều làn da của chị đang cần.</p><a href="#">Da bạn thuộc loại nào? →</a></div>
-          <div class="step"><h3>Chọn đúng</h3><p>Biết đọc thành phần, hiểu hoạt chất để không mua theo quảng cáo.</p><a href="#">Cẩm nang hoạt chất →</a></div>
-          <div class="step"><h3>Làm đủ</h3><p>Một quy trình tối giản, làm đều mỗi ngày và kiên nhẫn với kết quả.</p><a href="#">Quy trình 3 bước tối giản →</a></div>
+          {loTrinh.map((x) => <div class="step"><h3>{x.ten}</h3><p>{x.moTa}</p><a href={x.href}>{x.nhan}</a></div>)}
         </div>
       </div>
     </section>
@@ -119,61 +92,20 @@ const phutNam = baiNam ? phutDocBai(baiNam) : 12;
     <section class="wrap" id="moi-nhat">
       <div class="sec-head reveal">
         <div><h2>Bài mới nhất</h2><p>Cập nhật mỗi tuần</p></div>
-        <a href="#" class="more">Xem tất cả →</a>
+        <a href="/bai/" class="more">Xem tất cả →</a>
       </div>
       <div class="grid-3">
-        <a href="#" class="card reveal">
-          <div class="thumb photo"><Image src={anhTroChuyen} alt="Hai chị em vui vẻ trò chuyện bên máy tính" widths={[400, 720]} sizes="(max-width: 600px) 100vw, 360px" style="object-position: 40% 40%" /></div>
-          <div class="card-body"><span><span class="tag t-nam">Nám &amp; sạm</span></span>
-            <h3>Nám sau sinh và nám nội tiết: vì sao da sạm đi sau khi làm mẹ</h3>
-            <p>Thay đổi nội tiết ảnh hưởng tới sắc tố da như thế nào, và điều gì nên chờ đợi.</p>
-            <div class="meta"><span>20/11/2026</span><span>10 phút đọc</span></div></div>
-        </a>
-        <a href="#" class="card reveal">
-          <div class="thumb" style="background:var(--accent-soft)"><svg viewBox="0 0 100 100"><rect x="30" y="16" width="40" height="68" rx="14" fill="var(--accent)"/><rect x="38" y="30" width="24" height="6" rx="3" fill="var(--accent-soft)"/></svg></div>
-          <div class="card-body"><span><span class="tag t-skin">Chăm da</span></span>
-            <h3>Các hoạt chất làm sáng nám an toàn: nên bắt đầu từ đâu</h3>
-            <p>Niacinamide, vitamin C, tranexamic acid, arbutin: hiểu từng loại trước khi dùng.</p>
-            <div class="meta"><span>16/11/2026</span><span>9 phút đọc</span></div></div>
-        </a>
-        <a href="#" class="card reveal">
-          <div class="thumb photo"><Image src={anhDuongDa} alt="Giang chăm da buổi tối sau khi tắm, quấn khăn trên đầu" widths={[400, 513]} sizes="(max-width: 600px) 100vw, 360px" /></div>
-          <div class="card-body"><span><span class="tag t-life">Lối sống</span></span>
-            <h3>Ngủ đủ, da đẹp: giấc ngủ ảnh hưởng tới làn da ra sao</h3>
-            <p>Vài thói quen nhỏ trước giờ ngủ giúp da phục hồi tốt hơn mà không tốn kém.</p>
-            <div class="meta"><span>12/11/2026</span><span>6 phút đọc</span></div></div>
-        </a>
-        <a href="#" class="card reveal">
-          <div class="thumb photo"><Image src={anhDocSach} alt="Giang ngồi đọc sách bên mạn thuyền" widths={[400, 720]} sizes="(max-width: 600px) 100vw, 360px" /></div>
-          <div class="card-body"><span><span class="tag t-heart">Góc tâm sự</span></span>
-            <h3>Chăm sóc bản thân không phải là ích kỷ</h3>
-            <p>Người phụ nữ hiểu mình và yêu mình mới đủ sức gánh những điều còn lại.</p>
-            <div class="meta"><span>08/11/2026</span><span>5 phút đọc</span></div></div>
-        </a>
-        <a href="#" class="card reveal">
-          <div class="thumb" style="background:var(--soft)"><svg viewBox="0 0 100 100"><rect x="20" y="24" width="60" height="52" rx="12" fill="var(--muted)" opacity=".35"/><path d="M32 42h36M32 54h24" stroke="var(--text)" stroke-width="6" stroke-linecap="round"/></svg></div>
-          <div class="card-body"><span><span class="tag t-skin">Chăm da</span></span>
-            <h3>Cách đọc bảng thành phần mỹ phẩm trong 5 phút</h3>
-            <p>Mẹo nhận biết thành phần chính, chất dễ kích ứng và những lời quảng cáo cần cảnh giác.</p>
-            <div class="meta"><span>04/11/2026</span><span>7 phút đọc</span></div></div>
-        </a>
-        <a href="#" class="card reveal">
-          <div class="thumb photo"><Image src={anhCafe} alt="Giang thư thả bên ly nước ở quán cà phê" widths={[400, 650]} sizes="(max-width: 600px) 100vw, 360px" style="object-position: 50% 35%" /></div>
-          <div class="card-body"><span><span class="tag t-life">Lối sống</span></span>
-            <h3>Kiên nhẫn với làn da: vì sao cần ít nhất 28 ngày</h3>
-            <p>Chu kỳ tái tạo da và lý do không nên đổi sản phẩm liên tục.</p>
-            <div class="meta"><span>31/10/2026</span><span>6 phút đọc</span></div></div>
-        </a>
+        {moiNhat.map((b) => <TheBai bai={b} />)}
       </div>
     </section>
 
     <!-- ================= FAQ ================= -->
-    <section class="wrap">
+    <section class="wrap" id="hoi-dap">
       <div class="faq-wrap">
         <div class="reveal">
           <h2 style="font-size:28px;letter-spacing:-.02em;line-height:1.3">Hỏi nhanh, đáp gọn</h2>
           <p style="color:var(--muted);margin-top:10px">Những câu chị em hỏi Giang nhiều nhất. Chưa thấy câu của chị? Gửi cho Giang nhé.</p>
-          <a href="#" class="btn btn-ghost" style="margin-top:22px">Gửi câu hỏi</a>
+          <a href={KENH.messenger} class="btn btn-ghost" style="margin-top:22px" target="_blank" rel="noopener">Gửi câu hỏi cho Giang</a>
         </div>
         <div class="reveal">
           <details open><summary>Nám có trị dứt điểm được không?</summary><p>Nám là tình trạng dễ tái phát, nên mục tiêu thực tế là kiểm soát và làm mờ bền vững, không phải "hết vĩnh viễn". Chống nắng đều và kiên nhẫn quan trọng hơn bất kỳ sản phẩm nào.</p></details>
@@ -195,7 +127,7 @@ const phutNam = baiNam ? phutDocBai(baiNam) : 12;
           <blockquote>"Giang không hứa trắng thần tốc. Giang chỉ muốn chị hiểu làn da của mình hơn một chút."</blockquote>
           <p>Mình là Lê Thu Giang, người đồng hành cùng phụ nữ bận rộn trên hành trình chăm sóc bản thân từ bên trong. Mình chia sẻ kiến thức chăm da khoa học, đơn giản, làm được tại nhà, cùng những câu chuyện về lối sống kỷ luật và yêu thương chính mình.</p>
           <div class="pledges"><span>Giải thích khoa học dễ hiểu</span><span>Không thổi phồng</span><span>Không chạy theo trend</span></div>
-          <a href="#" class="more" style="display:inline-block;margin-top:22px">Đọc câu chuyện của Giang →</a>
+          <a href="/ve-giang/" class="more" style="display:inline-block;margin-top:22px">Đọc thêm về Giang →</a>
         </div>
       </div>
     </section>
@@ -203,14 +135,13 @@ const phutNam = baiNam ? phutDocBai(baiNam) : 12;
     <!-- ================= NEWSLETTER ================= -->
     <section class="wrap">
       <div class="news reveal">
-        <h2>Một lá thư nhỏ mỗi sáng Chủ nhật</h2>
-        <p>Một kiến thức chăm da, một thói quen tốt và một lời nhắn yêu thương. Đọc trong 3 phút.</p>
-        <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='Cảm ơn chị!';">
-          <label for="email" class="skip">Email</label>
-          <input id="email" type="email" placeholder="Email của chị" required>
-          <button type="submit">Nhận thư</button>
-        </form>
-        <small>Không spam. Hủy bất cứ lúc nào.</small>
+        <h2>Theo dõi Giang mỗi ngày</h2>
+        <p>Video chăm da mới trên YouTube, chia sẻ nhỏ trên Facebook. Có câu hỏi riêng thì nhắn thẳng cho Giang.</p>
+        <div class="actions" style="justify-content:center">
+          <a href={KENH.youtube} class="btn btn-primary" target="_blank" rel="noopener">Kênh YouTube</a>
+          <a href={KENH.facebook} class="btn btn-ghost" target="_blank" rel="noopener">Facebook</a>
+          <a href={KENH.zalo} class="btn btn-ghost" target="_blank" rel="noopener">Zalo</a>
+        </div>
       </div>
     </section>
   </main>
