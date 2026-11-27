@@ -1,0 +1,30 @@
+---
+// Thẻ bài viết dùng chung cho trang chủ, danh sách bài, trang chủ đề và mục "Đọc tiếp".
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { CHU_DE, ngayVN, phutDocBai } from '../lib/bai';
+
+interface Props {
+  bai: CollectionEntry<'bai'>;
+  /** Hiện đoạn mô tả ngắn dưới tiêu đề */
+  moTa?: boolean;
+  /** 'big' cho thẻ lớn ở mục nổi bật, 'side' cho thẻ nhỏ bên cạnh */
+  co?: 'big' | 'side' | 'thuong';
+}
+const { bai, moTa = true, co = 'thuong' } = Astro.props;
+const d = bai.data;
+const chuDe = CHU_DE[d.chuDe];
+const sizes = co === 'big' ? '(max-width: 820px) 100vw, 640px' : co === 'side' ? '(max-width: 820px) 100vw, 220px' : '(max-width: 600px) 100vw, 360px';
+const widths = co === 'big' ? [480, 760, 1100] : co === 'side' ? [320, 560] : [400, 720];
+---
+<a href={`/bai/${bai.id}/`} class:list={['card reveal', { big: co === 'big' }]} data-tim={`${d.tieuDe} ${d.moTa} ${chuDe.ten}`.toLowerCase()}>
+  {d.anh && (
+    <div class="thumb photo"><Image src={d.anh} alt={d.anhMoTa ?? ''} widths={widths} sizes={sizes} /></div>
+  )}
+  <div class="card-body">
+    <span><span class={`tag ${chuDe.the}`}>{chuDe.ten}</span></span>
+    <h3>{d.tieuDe}</h3>
+    {moTa && co !== 'side' && <p>{d.moTa}</p>}
+    <div class="meta">{co !== 'side' && <span>{ngayVN(d.ngay)}</span>}<span>{phutDocBai(bai)} phút đọc</span></div>
+  </div>
+</a>

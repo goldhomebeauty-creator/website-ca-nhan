@@ -6,6 +6,10 @@ chuDe: nam-sam
 anh: ../../assets/anh/tu-van-soi-da.webp
 anhMoTa: "Giang soi da và tư vấn cho khách"
 noiBat: true
+lienQuan:
+  - sai-lam-khien-nam-dam-hon
+  - chong-nang-cho-da-bi-nam
+  - hoat-chat-lam-sang-nam-an-toan
 video:
   id: gIRnDizCRjQ
   tieuDe: "4 sai lầm khi bôi kem chống nắng khiến nám da và cách dùng đúng"
@@ -92,7 +96,7 @@ Nguyên tắc của Giang luôn là **Hiểu da, chọn đúng, làm đủ**. V�
 
 ### Bước 1: Chống nắng là nền móng
 
-Nếu chỉ làm được một việc, hãy chống nắng thật kỹ:
+Nếu chỉ làm được một việc, hãy chống nắng thật kỹ (chi tiết trong bài [chống nắng cho da bị nám](/bai/chong-nang-cho-da-bi-nam/)):
 
 - Chọn kem chống nắng **phổ rộng**, SPF 30 trở lên.
 - Ưu tiên loại **có màu** (tinted), vì oxit sắt trong đó giúp chắn ánh sáng nhìn thấy.
@@ -109,7 +113,7 @@ Da bị kích ứng sẽ dễ tăng sắc tố. Chị nên dùng sữa rửa m�
 
 ### Bước 3: Thêm hoạt chất làm sáng, từ từ
 
-Một số hoạt chất đã có nghiên cứu hỗ trợ làm mờ nám: **niacinamide, vitamin C, axit azelaic, axit tranexamic dạng bôi, arbutin, retinoid**. Giang sẽ có bài riêng phân tích từng loại. Nguyên tắc chung:
+Một số hoạt chất đã có nghiên cứu hỗ trợ làm mờ nám: **niacinamide, vitamin C, axit azelaic, axit tranexamic dạng bôi, arbutin, retinoid**. Giang phân tích từng loại trong bài [hoạt chất làm sáng nám an toàn](/bai/hoat-chat-lam-sang-nam-an-toan/). Nguyên tắc chung:
 
 1. Mỗi lần chỉ thêm một hoạt chất.
 2. Thử trước ở vùng nhỏ sau tai hoặc quai hàm 2 đến 3 ngày.
@@ -120,6 +124,6 @@ Một số hoạt chất đã có nghiên cứu hỗ trợ làm mờ nám: **nia
 
 ## Kiên nhẫn là một phần của liệu trình
 
-Da cần khoảng 28 ngày, có khi lâu hơn, để thay mới một lớp tế bào. Sắc tố ở sâu còn cần nhiều thời gian hơn. Vì vậy, chị hãy chụp ảnh mặt mỗi tháng một lần, cùng một chỗ và cùng ánh sáng, để thấy tiến triển thật thay vì soi gương mỗi ngày rồi nản.
+Da cần khoảng 28 ngày, có khi lâu hơn, để thay mới một lớp tế bào. Sắc tố ở sâu còn cần nhiều thời gian hơn. Vì vậy, chị hãy chụp ảnh mặt mỗi tháng một lần, cùng một chỗ và cùng ánh sáng, để thấy tiến triển thật thay vì soi gương mỗi ngày rồi nản. Giang viết kỹ hơn trong bài [kiên nhẫn với làn da](/bai/kien-nhan-voi-lan-da/).
 
-Nếu chị chưa biết bắt đầu từ đâu, hãy bắt đầu từ **kem chống nắng sáng mai**. Đó là bước nhỏ nhất nhưng hiệu quả nhất.
+Nếu chị chưa biết bắt đầu từ đâu, hãy bắt đầu từ **kem chống nắng sáng mai**. Đó là bước nhỏ nhất nhưng hiệu quả nhất. Sau đó, chị có thể đi theo [quy trình chăm da 3 bước tối giản](/bai/quy-trinh-cham-da-3-buoc-toi-gian/), và tránh [7 sai lầm khiến nám càng trị càng đậm](/bai/sai-lam-khien-nam-dam-hon/).

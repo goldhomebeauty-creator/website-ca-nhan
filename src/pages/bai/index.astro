@@ -1,0 +1,57 @@
+---
+// Trang tất cả bài viết: /bai/ , có ô tìm nhanh và lọc theo chủ đề.
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import TheBai from '../../components/TheBai.astro';
+import { CHU_DE, chiBaiDang } from '../../lib/bai';
+
+const ds = chiBaiDang(await getCollection('bai'));
+---
+
+<Layout title="Tất cả bài viết - Lê Thu Giang" description="Toàn bộ bài viết về chăm da, nám và sạm màu, lối sống và góc tâm sự của Lê Thu Giang. Tìm nhanh theo từ khoá hoặc theo chủ đề." current="bai">
+  <main id="main">
+    <div class="wrap trang-dau">
+      <nav class="crumb" aria-label="Đường dẫn"><a href="/">Trang chủ</a><span aria-hidden="true">/</span><span>Tất cả bài viết</span></nav>
+      <h1>Tất cả bài viết</h1>
+      <p class="lead">{ds.length} bài, mới nhất ở trên. Gõ điều chị đang lo, hoặc chọn một chủ đề.</p>
+      <div class="tim" id="tim">
+        <label for="oTim" class="skip">Tìm bài viết</label>
+        <input id="oTim" type="search" placeholder="Ví dụ: nám sau sinh, chống nắng, giấc ngủ..." autocomplete="off" />
+      </div>
+      <div class="loc" role="group" aria-label="Chủ đề">
+        <a href="/bai/" class="chip" aria-current="page">Tất cả</a>
+        {Object.entries(CHU_DE).map(([ma, c]) => <a href={`/chu-de/${ma}/`} class="chip">{c.ten}</a>)}
+      </div>
+    </div>
+    <section class="wrap">
+      <div class="grid-3" id="dsBai">
+        {ds.map((b) => <TheBai bai={b} />)}
+      </div>
+      <p class="trong" id="khongThay" hidden>Chưa có bài khớp với từ khoá này. Chị thử từ khác, hoặc <a href="/#hoi-dap">gửi câu hỏi cho Giang</a> nhé.</p>
+    </section>
+  </main>
+
+  <script is:inline>
+  (function () {
+    var o = document.getElementById('oTim');
+    var the = document.querySelectorAll('#dsBai [data-tim]');
+    var trong = document.getElementById('khongThay');
+    function boDau(s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd'); }
+    function loc() {
+      var q = boDau(o.value.trim().toLowerCase());
+      var con = 0;
+      the.forEach(function (t) {
+        var hien = !q || boDau(t.getAttribute('data-tim')).indexOf(q) !== -1;
+        t.hidden = !hien;
+        if (hien) con++;
+      });
+      trong.hidden = con > 0;
+    }
+    var p = new URLSearchParams(location.search).get('q');
+    if (p) o.value = p;
+    o.addEventListener('input', loc);
+    loc();
+    if (location.hash === '#tim') o.focus();
+  })();
+  </script>
+</Layout>

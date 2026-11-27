@@ -1,11 +1,25 @@
 import type { CollectionEntry } from 'astro:content';
 
 export const CHU_DE = {
-  'cham-da': { ten: 'Chăm da', the: 't-skin' },
-  'nam-sam': { ten: 'Nám & sạm', the: 't-nam' },
-  'loi-song': { ten: 'Lối sống', the: 't-life' },
-  'goc-tam-su': { ten: 'Góc tâm sự', the: 't-heart' },
+  'cham-da': {
+    ten: 'Chăm da', the: 't-skin', tenDai: 'Chăm da cơ bản',
+    gioiThieu: 'Làm sạch, dưỡng ẩm, chống nắng và cách đọc bảng thành phần. Nền móng vững thì mọi bước sau mới có tác dụng.',
+  },
+  'nam-sam': {
+    ten: 'Nám & sạm', the: 't-nam', tenDai: 'Nám & sạm màu',
+    gioiThieu: 'Nám nội tiết, nám sau sinh, hoạt chất làm sáng an toàn. Hiểu đúng để kiểm soát lâu dài, không chạy theo lời hứa trắng nhanh.',
+  },
+  'loi-song': {
+    ten: 'Lối sống', the: 't-life', tenDai: 'Lối sống kỷ luật',
+    gioiThieu: 'Giấc ngủ, ăn uống, vận động và những thói quen nhỏ mỗi ngày. Làn da phản ánh cách chị sống.',
+  },
+  'goc-tam-su': {
+    ten: 'Góc tâm sự', the: 't-heart', tenDai: 'Góc tâm sự',
+    gioiThieu: 'Yêu mình từ bên trong, sống chậm và tự tin hơn. Những điều Giang muốn ngồi nói với chị như hai chị em.',
+  },
 } as const;
+
+export type MaChuDe = keyof typeof CHU_DE;
 
 /** Số phút đọc, tính theo khoảng 220 chữ mỗi phút. */
 export function phutDoc(noiDung = ''): number {

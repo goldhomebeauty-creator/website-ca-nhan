@@ -1,0 +1,60 @@
+---
+// Trang giới thiệu: /ve-giang/
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import anhChanDung from '../assets/anh/giang-chan-dung.webp';
+import { KENH } from '../lib/bai';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Lê Thu Giang',
+  url: new URL('/ve-giang/', Astro.site ?? Astro.url).href,
+  sameAs: [KENH.youtube, KENH.facebook],
+};
+---
+
+<Layout title="Về Giang - Lê Thu Giang" description="Lê Thu Giang là ai, blog này viết cho ai và Giang cam kết điều gì khi chia sẻ kiến thức chăm da, nám sạm và lối sống cho phụ nữ bận rộn." current="ve-giang">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <main id="main">
+    <div class="wrap trang-dau">
+      <nav class="crumb" aria-label="Đường dẫn"><a href="/">Trang chủ</a><span aria-hidden="true">/</span><span>Về Giang</span></nav>
+      <h1>Chào chị, Giang đây</h1>
+    </div>
+    <section class="wrap">
+      <div class="gioi-thieu">
+        <div class="avatar"><Image src={anhChanDung} alt="Chân dung Lê Thu Giang" widths={[320, 640]} sizes="(max-width: 820px) 240px, 320px" loading="eager" /></div>
+        <div>
+          <p class="lead" style="color:var(--muted);font-size:19px">"Giang không hứa trắng thần tốc. Giang chỉ muốn chị hiểu làn da của mình hơn một chút."</p>
+
+          <h2>Blog này viết cho ai</h2>
+          <p>Cho những người phụ nữ bận rộn: đi làm, chăm con, lo cho cả nhà, và đến cuối ngày chỉ còn vài phút cho bản thân. Chị không cần thêm mười bước dưỡng da hay một lọ kem "thần kỳ". Chị cần hiểu da mình đang cần gì, rồi làm đúng vài việc đó cho đều.</p>
+
+          <h2>Giang viết gì ở đây</h2>
+          <ul>
+            <li><a href="/chu-de/cham-da/">Chăm da cơ bản</a>: làm sạch, dưỡng ẩm, chống nắng, đọc bảng thành phần.</li>
+            <li><a href="/chu-de/nam-sam/">Nám và sạm màu</a>: hiểu nguyên nhân, chăm đúng, kiên nhẫn đủ lâu.</li>
+            <li><a href="/chu-de/loi-song/">Lối sống kỷ luật</a>: giấc ngủ, ăn uống, những thói quen nhỏ làm nên làn da.</li>
+            <li><a href="/chu-de/goc-tam-su/">Góc tâm sự</a>: yêu mình từ bên trong, sống chậm lại một chút.</li>
+          </ul>
+
+          <h2>Ba điều Giang cam kết</h2>
+          <ul>
+            <li><strong>Giải thích có cơ sở.</strong> Điều gì nói về khoa học đều có nguồn tham khảo ở cuối bài.</li>
+            <li><strong>Không thổi phồng.</strong> Không hứa "hết nám", "trắng sau 7 ngày". Da cần thời gian, và Giang nói thật điều đó.</li>
+            <li><strong>Không thay bác sĩ.</strong> Mỗi bài đều có mục "Khi nào cần gặp bác sĩ da liễu". Blog để chị hiểu, không để tự chẩn đoán.</li>
+          </ul>
+
+          <h2>Xem Giang nói chuyện trực tiếp</h2>
+          <p>Ngoài blog, Giang chia sẻ đều đặn bằng video trên kênh YouTube và trên trang Facebook. Chị có câu hỏi riêng thì nhắn cho Giang, Giang đọc hết và chọn những câu nhiều chị em cùng gặp để viết thành bài.</p>
+          <div class="actions">
+            <a href={KENH.youtube} class="btn btn-primary" target="_blank" rel="noopener">Kênh YouTube</a>
+            <a href={KENH.facebook} class="btn btn-ghost" target="_blank" rel="noopener">Trang Facebook</a>
+            <a href={KENH.messenger} class="btn btn-ghost" target="_blank" rel="noopener">Nhắn câu hỏi</a>
+          </div>
+          <p class="post-note" style="margin-top:28px">Nội dung trên blog mang tính tham khảo, không thay thế chẩn đoán và điều trị của bác sĩ da liễu.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

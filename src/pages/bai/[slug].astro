@@ -5,6 +5,7 @@ import { Image, getImage } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import anhTacGia from '../../assets/anh/giang-chan-dung.webp';
 import VideoYoutube from '../../components/VideoYoutube.astro';
+import TheBai from '../../components/TheBai.astro';
 import { CHU_DE, KENH, phutDocBai, ngayVN, chiBaiDang, thoiLuongISO } from '../../lib/bai';
 
 export async function getStaticPaths() {
@@ -73,7 +74,7 @@ if (d.video) {
 }
 ---
 
-<Layout title={`${d.tieuDe} - Lê Thu Giang`} description={d.moTa} anhChiaSe={anhChiaSe} loai="article">
+<Layout title={`${d.tieuDe} - Lê Thu Giang`} description={d.moTa} anhChiaSe={anhChiaSe} loai="article" current={d.chuDe}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
   <div class="read-progress" aria-hidden="true"><span id="readBar"></span></div>
@@ -82,9 +83,9 @@ if (d.video) {
     <article class="post">
       <div class="post-head">
         <nav class="crumb" aria-label="Đường dẫn">
-          <a href="/">Trang chủ</a><span aria-hidden="true">/</span><a href="/#chu-de">{chuDe.ten}</a>
+          <a href="/">Trang chủ</a><span aria-hidden="true">/</span><a href={`/chu-de/${d.chuDe}/`}>{chuDe.ten}</a>
         </nav>
-        <span class={`tag ${chuDe.the}`}>{chuDe.ten}</span>
+        <a href={`/chu-de/${d.chuDe}/`} class={`tag ${chuDe.the}`}>{chuDe.ten}</a>
         <h1>{d.tieuDe}</h1>
         <p class="lead">{d.moTa}</p>
         <div class="post-meta">
@@ -173,7 +174,7 @@ if (d.video) {
               <strong>Lê Thu Giang</strong>
               <p>Người đồng hành cùng phụ nữ bận rộn trên hành trình chăm sóc bản thân từ bên trong. Chia sẻ kiến thức chăm da khoa học, đơn giản, làm được tại nhà.</p>
               <span class="author-links">
-                <a href="/#ve-giang" class="more">Về Giang →</a>
+                <a href="/ve-giang/" class="more">Về Giang →</a>
                 <a href={KENH.youtube} class="more" target="_blank" rel="noopener">Kênh YouTube →</a>
               </span>
             </div>
@@ -186,20 +187,9 @@ if (d.video) {
 
     {lienQuan.length > 0 && (
       <section class="wrap related">
-        <div class="sec-head"><div><h2>Đọc tiếp</h2><p>Những bài cùng chủ đề chị có thể quan tâm</p></div></div>
+        <div class="sec-head"><div><h2>Đọc tiếp</h2><p>Những bài cùng chủ đề chị có thể quan tâm</p></div><a href={`/chu-de/${d.chuDe}/`} class="more">Thêm bài {chuDe.ten} →</a></div>
         <div class="grid-3">
-          {lienQuan.map((b) => (
-            <a href={`/bai/${b.id}/`} class="card">
-              {b.data.anh && (
-                <div class="thumb photo"><Image src={b.data.anh} alt={b.data.anhMoTa ?? ''} widths={[400, 720]} sizes="(max-width: 600px) 100vw, 360px" /></div>
-              )}
-              <div class="card-body">
-                <span><span class={`tag ${CHU_DE[b.data.chuDe].the}`}>{CHU_DE[b.data.chuDe].ten}</span></span>
-                <h3>{b.data.tieuDe}</h3>
-                <div class="meta"><span>{ngayVN(b.data.ngay)}</span><span>{phutDocBai(b)} phút đọc</span></div>
-              </div>
-            </a>
-          ))}
+          {lienQuan.map((b) => <TheBai bai={b} moTa={false} />)}
         </div>
       </section>
     )}
