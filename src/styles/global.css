@@ -303,7 +303,7 @@ footer { border-top: 1px solid var(--line); margin-top: 56px; padding: 48px 0 32
 .prose li::marker { color: var(--accent); }
 .prose strong { font-weight: 600; }
 .prose blockquote { border-left: 3px solid var(--accent); padding: 4px 0 4px 20px; color: var(--muted); font-style: italic; }
-.prose img { border-radius: 14px; }
+.prose img { height: auto; border-radius: 14px; }
 .prose hr { border: 0; border-top: 1px solid var(--line); margin: 2em 0; }
 .prose table { width: 100%; border-collapse: collapse; font-size: .9em; display: block; overflow-x: auto; }
 .prose th, .prose td { border-bottom: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
